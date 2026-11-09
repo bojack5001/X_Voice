@@ -1,0 +1,95 @@
+import { FollowUpTask } from '../types';
+
+export const INITIAL_TASKS: FollowUpTask[] = [
+  {
+    id: 'TSK-301',
+    title: 'Call back Muruganandham P regarding RC upload guidance',
+    category: 'Callback',
+    priority: 'High',
+    status: 'Pending',
+    assignedToName: 'Meena Sundari R',
+    assignedRole: 'Customer Care Executive',
+    targetContactName: 'Muruganandham P',
+    targetPhone: '+91 97890 12399',
+    targetType: 'Driver',
+    dueDate: '2026-11-09 18:30',
+    createdDate: '2026-11-09 11:45',
+    notes: 'Driver was on an active trip during the morning AI call. Requested Tamil guidance after 6:00 PM.'
+  },
+  {
+    id: 'TSK-302',
+    title: 'Manual Review of Dzire commercial insurance for Ravi Teja',
+    category: 'Doc Review',
+    priority: 'Medium',
+    status: 'In Progress',
+    assignedToName: 'Praveen Chalamalasetty',
+    assignedRole: 'Team Leader',
+    targetContactName: 'Ravi Teja Naidu',
+    targetPhone: '+91 94408 87654',
+    targetType: 'Driver',
+    dueDate: '2026-11-09 16:00',
+    createdDate: '2026-11-09 10:15',
+    notes: 'Insurance photo received via WhatsApp webhook. Check endorsement policy date & comprehensive coverage.'
+  },
+  {
+    id: 'TSK-303',
+    title: 'Policy Explanation & Dispute Resolution: Expired FC',
+    category: 'Human Escalation',
+    priority: 'Urgent',
+    status: 'In Progress',
+    assignedToName: 'Dinesh Kumar Shanmugam',
+    assignedRole: 'Team Leader',
+    targetContactName: 'Karthikeyan S',
+    targetPhone: '+91 98410 77319',
+    targetType: 'Driver',
+    dueDate: '2026-11-09 14:00',
+    createdDate: '2026-11-08 17:05',
+    notes: 'AI Call detected heated response on fitness certificate rejection. Needs diplomatic manager discussion.'
+  },
+  {
+    id: 'TSK-304',
+    title: 'Re-engagement check on churn-risk passenger Bhanu Chander',
+    category: 'VIP Support',
+    priority: 'Low',
+    status: 'Pending',
+    assignedToName: 'Sravani V',
+    assignedRole: 'Customer Care Executive',
+    targetContactName: 'Bhanu Chander R',
+    targetPhone: '+91 96180 44912',
+    targetType: 'Passenger',
+    dueDate: '2026-11-10 11:00',
+    createdDate: '2026-11-08 14:20',
+    notes: 'Passenger experienced 2 driver cancellations last month. Offer ₹150 apology credit in Telugu.'
+  },
+  {
+    id: 'TSK-305',
+    title: 'Weekly compliance audit on EV fleet subsidies documentation',
+    category: 'Doc Review',
+    priority: 'High',
+    status: 'Pending',
+    assignedToName: 'Deepika Narayanan',
+    assignedRole: 'HR',
+    targetContactName: 'Fleet Operations Pool',
+    targetPhone: '+91 98400 11000',
+    targetType: 'Driver',
+    dueDate: '2026-11-11 17:00',
+    createdDate: '2026-11-07 09:00',
+    notes: 'Ensure all newly onboarded EV auto drivers have submitted state subsidy registration affidavits.'
+  },
+  {
+    id: 'TSK-306',
+    title: 'Executive review of AI Telephony connectivity metrics for Q4',
+    category: 'Compliance Check',
+    priority: 'Medium',
+    status: 'Completed',
+    assignedToName: 'Jaganathan Sundararajan',
+    assignedRole: 'CEO',
+    targetContactName: 'Executive Board',
+    targetPhone: '+91 98400 11000',
+    targetType: 'Driver',
+    dueDate: '2026-11-08 18:00',
+    createdDate: '2026-11-05 10:00',
+    notes: 'Reviewed South India regional call answer rates (82.4% target met).'
+  }
+];
+
