@@ -18,20 +18,20 @@ import { DemoBadge } from '../components/common/DemoBadge';
 
 export const SettingsPage: React.FC = () => {
   const { currentUser, setCurrentUser } = useAuth();
-  const { resetToDefaults } = useData();
+  const { companyProfile, updateCompanyProfile, resetToDefaults } = useData();
 
   const [activeTab, setActiveTab] = useState<'company' | 'profile' | 'preferences'>('company');
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-  // Company details state
+  // Configurable Company Profile state
   const [companyData, setCompanyData] = useState({
-    legalName: 'XPOOL Technology Private Limited',
-    brandName: 'XPOOL AI CONNECT',
-    cin: 'U72900TN2024PTC168921',
-    registeredOffice: 'No. 42, OMR IT Highway, Sholinganallur, Chennai, Tamil Nadu - 600119, India',
-    supportEmail: 'telephony-ops@xpool.in',
-    phone: '+91 44 4890 1200',
-    website: 'https://xpool.in',
+    legalName: companyProfile.legalName,
+    brandName: companyProfile.brandName,
+    cin: companyProfile.cin,
+    registeredOffice: companyProfile.registeredOffice,
+    supportEmail: companyProfile.supportEmail,
+    phone: companyProfile.phone,
+    website: companyProfile.website,
     primaryColor: '#F59E0B'
   });
 
@@ -56,6 +56,15 @@ export const SettingsPage: React.FC = () => {
 
   const handleSaveCompany = (e: React.FormEvent) => {
     e.preventDefault();
+    updateCompanyProfile({
+      legalName: companyData.legalName,
+      brandName: companyData.brandName,
+      cin: companyData.cin,
+      registeredOffice: companyData.registeredOffice,
+      supportEmail: companyData.supportEmail,
+      phone: companyData.phone,
+      website: companyData.website
+    });
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 2500);
   };

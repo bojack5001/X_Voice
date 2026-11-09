@@ -166,7 +166,7 @@ export const DriverEngagement: React.FC = () => {
           <div>
             <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider block">Re-engagement</span>
             <div className="text-lg font-bold text-slate-900 mt-0.5">{reEngagementQueue.length} Uncontacted</div>
-            <span className="text-[11px] text-slate-500">Fresh campaign leads</span>
+            <span className="text-[11px] text-slate-500">Pending onboarding review</span>
           </div>
           <ArrowUpRight className="w-5 h-5 text-blue-500" />
         </button>
@@ -202,7 +202,7 @@ export const DriverEngagement: React.FC = () => {
                 className="p-4 hover:bg-slate-50/70 transition flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs"
               >
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-bold text-slate-900 text-sm">{driver.name}</span>
                     <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono font-medium">
                       {driver.id}
@@ -210,14 +210,28 @@ export const DriverEngagement: React.FC = () => {
                     <span className="text-[10px] bg-amber-50 text-amber-800 border border-amber-200 px-1.5 py-0.2 rounded font-semibold">
                       {driver.preferredLanguage}
                     </span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded font-bold ${
+                      driver.consentStatus === 'Consent Granted' ? 'bg-emerald-100 text-emerald-800' :
+                      driver.consentStatus === 'Consent Revoked' ? 'bg-rose-100 text-rose-800' :
+                      'bg-amber-100 text-amber-800'
+                    }`}>
+                      {driver.consentStatus || 'Consent Unknown'}
+                    </span>
+                    {driver.dncStatus === 'DNC Active' && (
+                      <span className="text-[10px] bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded font-bold">
+                        DNC Active
+                      </span>
+                    )}
                   </div>
 
-                  <div className="flex items-center gap-3 text-slate-500 text-[11px]">
+                  <div className="flex items-center gap-3 text-slate-500 text-[11px] flex-wrap">
                     <span className="font-mono">{driver.phone}</span>
                     <span>•</span>
                     <span>{driver.city} ({driver.vehicleType})</span>
                     <span>•</span>
-                    <span className="font-medium text-slate-700">Last Outcome: {driver.lastCallOutcome || 'Never Called'}</span>
+                    <span className="font-medium text-slate-700">Attempts: {driver.aiCallAttempts}</span>
+                    <span>•</span>
+                    <span className="font-medium text-slate-700">Next Eligible: {driver.nextEligibleContactDate || 'Eligible Now'}</span>
                   </div>
 
                   <p className="text-[11px] text-slate-600 bg-slate-50 p-2 rounded-lg border border-slate-100 max-w-2xl mt-1">
@@ -242,20 +256,28 @@ export const DriverEngagement: React.FC = () => {
                     className="px-3 py-1.5 bg-rose-50 border border-rose-200 hover:bg-rose-100 text-rose-800 text-xs font-semibold rounded-lg flex items-center gap-1 transition"
                   >
                     <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />
-                    <span>Escalate to TL</span>
+                    <span>Human Escalation</span>
                   </button>
 
                   <button
+                    disabled={driver.consentStatus !== 'Consent Granted' || driver.dncStatus === 'DNC Active'}
                     onClick={() => setCallModalData({
                       isOpen: true,
                       name: driver.name,
                       phone: driver.phone,
                       language: driver.preferredLanguage
                     })}
-                    className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5 transition active:scale-95"
+                    className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 disabled:opacity-35 disabled:cursor-not-allowed text-slate-950 text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5 transition active:scale-95"
+                    title={
+                      driver.consentStatus !== 'Consent Granted'
+                        ? `Calling blocked: ${driver.consentStatus}`
+                        : driver.dncStatus === 'DNC Active'
+                        ? 'Calling blocked: DNC Active'
+                        : 'Dispatch manual AI call'
+                    }
                   >
                     <PhoneCall className="w-3.5 h-3.5" />
-                    <span>Launch AI Call</span>
+                    <span>Manual AI Call</span>
                   </button>
                 </div>
               </div>

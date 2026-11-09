@@ -8,7 +8,8 @@ import {
   AIAgentConfig, 
   DashboardKPISummary,
   LanguageCode,
-  LeadImportRow
+  LeadImportRow,
+  CompanyProfile
 } from '../types';
 import { INITIAL_DRIVERS } from '../data/mockDrivers';
 import { INITIAL_PASSENGERS } from '../data/mockPassengers';
@@ -16,6 +17,7 @@ import { INITIAL_CALLS, LIVE_CALL_SAMPLES } from '../data/mockCalls';
 import { INITIAL_TASKS } from '../data/mockTasks';
 import { INITIAL_EMPLOYEES } from '../data/mockEmployees';
 import { INITIAL_AI_AGENTS } from '../data/mockAgents';
+import { DEFAULT_COMPANY_PROFILE } from '../data/mockConfig';
 
 interface DataContextType {
   drivers: Driver[];
@@ -26,6 +28,7 @@ interface DataContextType {
   aiAgents: AIAgentConfig[];
   liveCalls: typeof LIVE_CALL_SAMPLES;
   kpiSummary: DashboardKPISummary;
+  companyProfile: CompanyProfile;
   
   // Actions
   addDriver: (driver: Omit<Driver, 'id'>) => Driver;
@@ -45,6 +48,7 @@ interface DataContextType {
   updateEmployee: (id: string, updates: Partial<Employee>) => void;
   
   updateAgentConfig: (id: string, updates: Partial<AIAgentConfig>) => void;
+  updateCompanyProfile: (updates: Partial<CompanyProfile>) => void;
   
   importLeads: (leads: LeadImportRow[]) => { addedCount: number; duplicateCount: number };
   
@@ -57,61 +61,70 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Load from localStorage or defaults
   const [drivers, setDrivers] = useState<Driver[]>(() => {
-    const saved = localStorage.getItem('xpool_drivers');
+    const saved = localStorage.getItem('xpool_drivers_v2');
     return saved ? JSON.parse(saved) : INITIAL_DRIVERS;
   });
 
   const [passengers, setPassengers] = useState<Passenger[]>(() => {
-    const saved = localStorage.getItem('xpool_passengers');
+    const saved = localStorage.getItem('xpool_passengers_v2');
     return saved ? JSON.parse(saved) : INITIAL_PASSENGERS;
   });
 
   const [calls, setCalls] = useState<CallRecord[]>(() => {
-    const saved = localStorage.getItem('xpool_calls');
+    const saved = localStorage.getItem('xpool_calls_v2');
     return saved ? JSON.parse(saved) : INITIAL_CALLS;
   });
 
   const [tasks, setTasks] = useState<FollowUpTask[]>(() => {
-    const saved = localStorage.getItem('xpool_tasks');
+    const saved = localStorage.getItem('xpool_tasks_v2');
     return saved ? JSON.parse(saved) : INITIAL_TASKS;
   });
 
   const [employees, setEmployees] = useState<Employee[]>(() => {
-    const saved = localStorage.getItem('xpool_employees');
+    const saved = localStorage.getItem('xpool_employees_v2');
     return saved ? JSON.parse(saved) : INITIAL_EMPLOYEES;
   });
 
   const [aiAgents, setAiAgents] = useState<AIAgentConfig[]>(() => {
-    const saved = localStorage.getItem('xpool_ai_agents');
+    const saved = localStorage.getItem('xpool_ai_agents_v2');
     return saved ? JSON.parse(saved) : INITIAL_AI_AGENTS;
+  });
+
+  const [companyProfile, setCompanyProfile] = useState<CompanyProfile>(() => {
+    const saved = localStorage.getItem('xpool_company_profile_v2');
+    return saved ? JSON.parse(saved) : DEFAULT_COMPANY_PROFILE;
   });
 
   const [liveCalls, setLiveCalls] = useState(LIVE_CALL_SAMPLES);
 
   // Sync with localStorage
   useEffect(() => {
-    localStorage.setItem('xpool_drivers', JSON.stringify(drivers));
+    localStorage.setItem('xpool_drivers_v2', JSON.stringify(drivers));
   }, [drivers]);
 
   useEffect(() => {
-    localStorage.setItem('xpool_passengers', JSON.stringify(passengers));
+    localStorage.setItem('xpool_passengers_v2', JSON.stringify(passengers));
   }, [passengers]);
 
   useEffect(() => {
-    localStorage.setItem('xpool_calls', JSON.stringify(calls));
+    localStorage.setItem('xpool_calls_v2', JSON.stringify(calls));
   }, [calls]);
 
   useEffect(() => {
-    localStorage.setItem('xpool_tasks', JSON.stringify(tasks));
+    localStorage.setItem('xpool_tasks_v2', JSON.stringify(tasks));
   }, [tasks]);
 
   useEffect(() => {
-    localStorage.setItem('xpool_employees', JSON.stringify(employees));
+    localStorage.setItem('xpool_employees_v2', JSON.stringify(employees));
   }, [employees]);
 
   useEffect(() => {
-    localStorage.setItem('xpool_ai_agents', JSON.stringify(aiAgents));
+    localStorage.setItem('xpool_ai_agents_v2', JSON.stringify(aiAgents));
   }, [aiAgents]);
+
+  useEffect(() => {
+    localStorage.setItem('xpool_company_profile_v2', JSON.stringify(companyProfile));
+  }, [companyProfile]);
 
   // Real-time ticking simulation for live calls
   useEffect(() => {
@@ -124,21 +137,27 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => clearInterval(timer);
   }, []);
 
-  // Compute live KPIs
+  // Compute live KPIs (Clearly identifying them as simulated demo metrics)
   const kpiSummary: DashboardKPISummary = {
     totalDrivers: drivers.length,
     totalPassengers: passengers.length,
-    leadsImported: 1850 + drivers.filter(d => d.status === 'lead').length,
-    callsInitiated: calls.length + 1520,
-    answeredCalls: calls.filter(c => c.status === 'completed' || c.status === 'transferred').length + 1248,
-    successfulOnboarding: drivers.filter(d => d.status === 'onboarded').length + 786,
+    leadsImported: 185 + drivers.filter(d => d.status === 'lead').length,
+    callsInitiated: calls.length + 152,
+    answeredCalls: calls.filter(c => c.status === 'completed' || c.status === 'transferred').length + 124,
+    successfulOnboarding: drivers.filter(d => d.status === 'onboarded').length + 78,
     pendingFollowups: tasks.filter(t => t.status !== 'Completed').length,
-    humanEscalations: calls.filter(c => c.outcome === 'Escalated to Human' || c.status === 'transferred').length + 14
+    humanEscalations: calls.filter(c => c.outcome === 'Escalated to Human' || c.status === 'transferred').length + 4
   };
 
   const addDriver = (driverData: Omit<Driver, 'id'>): Driver => {
     const newId = `DRV-${1000 + drivers.length + 1}`;
-    const newDriver: Driver = { ...driverData, id: newId };
+    const newDriver: Driver = { 
+      ...driverData, 
+      id: newId,
+      consentStatus: driverData.consentStatus || 'Consent Unknown',
+      dncStatus: driverData.dncStatus || 'Not Listed',
+      nextEligibleContactDate: driverData.consentStatus === 'Consent Granted' ? 'Eligible Now' : 'Blocked — Awaiting Explicit Consent'
+    };
     setDrivers(prev => [newDriver, ...prev]);
     return newDriver;
   };
@@ -153,7 +172,14 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const addPassenger = (passengerData: Omit<Passenger, 'id'>): Passenger => {
     const newId = `PSG-${5000 + passengers.length + 1}`;
-    const newPassenger: Passenger = { ...passengerData, id: newId };
+    const newPassenger: Passenger = { 
+      ...passengerData, 
+      id: newId,
+      consentStatus: passengerData.consentStatus || 'Consent Unknown',
+      dncStatus: passengerData.dncStatus || 'Not Listed',
+      callAttempts: 0,
+      nextEligibleContactDate: passengerData.consentStatus === 'Consent Granted' ? 'Eligible Now' : 'Blocked — Awaiting Explicit Consent'
+    };
     setPassengers(prev => [newPassenger, ...prev]);
     return newPassenger;
   };
@@ -199,6 +225,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setAiAgents(prev => prev.map(a => a.id === id ? { ...a, ...updates } : a));
   };
 
+  const updateCompanyProfile = (updates: Partial<CompanyProfile>) => {
+    setCompanyProfile(prev => ({ ...prev, ...updates }));
+  };
+
+  // Import Leads: XLSX ONLY, strictly NEVER starts calls automatically
   const importLeads = (leads: LeadImportRow[]) => {
     let addedCount = 0;
     let duplicateCount = 0;
@@ -215,26 +246,33 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       addedCount++;
       existingPhones.add(cleanPhone);
 
+      const mappedLang: LanguageCode = 
+        row.language === 'Telugu' ? 'Telugu' :
+        row.language === 'English' ? 'English' : 'Tamil';
+
       newDriversToAdd.push({
         id: `DRV-${1050 + drivers.length + idx}`,
-        name: row.name || 'Lead Contact',
+        name: row.name || 'Demo Lead Contact',
         phone: row.phone,
-        email: `${row.name.toLowerCase().replace(/\s+/g, '.')}@lead.xpool.in`,
+        email: `${row.name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@demo.xpool.test`,
         city: row.city || 'Chennai',
         vehicleType: (row.vehicleType as any) || 'Auto',
-        vehicleNumber: 'Pending Ingest',
+        vehicleNumber: 'Pending Verification',
         status: 'lead',
-        preferredLanguage: (row.language as any) || 'Tamil',
+        preferredLanguage: mappedLang,
         aiCallAttempts: 0,
         joinedDate: new Date().toISOString().split('T')[0],
         complianceScore: 20,
+        consentStatus: row.consentStatus || 'Consent Unknown',
+        dncStatus: row.dncStatus || 'Not Listed',
+        nextEligibleContactDate: row.consentStatus === 'Consent Granted' ? 'Eligible Now' : 'Blocked — Awaiting Explicit Consent',
         documents: [
           { type: 'Aadhaar', number: 'Pending', status: 'Missing' },
           { type: 'Driving License', number: 'Pending', status: 'Missing' },
           { type: 'RC Book', number: 'Pending', status: 'Missing' },
           { type: 'Vehicle Insurance', number: 'Pending', status: 'Missing' }
         ],
-        notes: `Imported via Lead Batch File. Target vehicle: ${row.vehicleType}. Ready for AI outreach.`
+        notes: `Imported via Lead Batch File. Target vehicle: ${row.vehicleType}. Consent: ${row.consentStatus || 'Consent Unknown'}. Manual outreach only.`
       });
     });
 
@@ -242,6 +280,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setDrivers(prev => [...newDriversToAdd, ...prev]);
     }
 
+    // STRICT: Never initiate calls after Excel upload.
     return { addedCount, duplicateCount };
   };
 
@@ -260,8 +299,8 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       outcome: 'Interested',
       sentiment: 'Positive',
       audioDuration: '01:55',
-      keyNotes: `Simulated AI call initiated by operator. Target confirmed interest in XPOOL onboarding program in ${language}.`,
-      actionItem: `Automatic WhatsApp KYC upload link dispatched to ${phone}.`,
+      keyNotes: `Simulated AI call manually authorized by operator. Target confirmed interest in XPOOL partner program in ${language}. (DEMO SIMULATION)`,
+      actionItem: `Manual WhatsApp KYC upload link dispatched to ${phone}. (DEMO ONLY)`,
       transcript: [
         {
           speaker: 'AI Agent',
@@ -276,23 +315,17 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
             : language === 'Telugu'
             ? 'హలో అండి, నేను కొత్తగా చేరాలనుకుంటున్నాను. ఏ డాక్యుమెంట్లు కావాలి?'
             : 'Hello, yes I am interested in joining XPOOL. What documents do I need to prepare?',
-          timestamp: '00:22',
+          timestamp: '00:18',
           sentiment: 'Positive'
         },
         {
           speaker: 'AI Agent',
           text: language === 'Tamil'
-            ? 'மிக்க மகிழ்ச்சி சார்! உங்கள் ஆதார், ஓட்டுநர் உரிமம் மற்றும் வாகன ஆர்சி புத்தகத்தின் தெளிவான புகைப்படத்தை எங்கள் வாட்ஸ்அப் எண்ணிற்கு அனுப்புங்கள். உடனடியாக பதிவு முடிவடையும்.'
+            ? 'மிக்க மகிழ்ச்சி சார்! உங்கள் ஆதார் மற்றும் ஓட்டுநர் உரிமத்தின் தெளிவான புகைப்படத்தை அனுப்புங்கள்.'
             : language === 'Telugu'
-            ? 'చాలా సంతోషం అండి! మీ ఆధార్, డ్రైవింగ్ లైసెన్స్ మరియు ఆర్సీ ఫోటోలను మా అధికారిక వాట్సాప్‌కి పంపించండి.'
-            : 'Wonderful! Please share clear photos of your Aadhaar, driving license, and vehicle registration book to our verified WhatsApp. We will activate your partner account promptly.',
-          timestamp: '00:46',
-          sentiment: 'Positive'
-        },
-        {
-          speaker: 'Customer',
-          text: language === 'Tamil' ? 'சரிங்க, இப்போதே அனுப்புகிறேன். நன்றி!' : language === 'Telugu' ? 'సరే అండి, ఇప్పుడే పంపుతాను.' : 'Great, I will upload them right away. Thank you!',
-          timestamp: '01:05',
+            ? 'చాలా సంతోషం అండి! మీ ఆధార్ మరియు డ్రైవింగ్ లైసెన్స్ ఫోటోలను పంపించండి.'
+            : 'Wonderful! Please share clear photos of your Aadhaar and driving license.',
+          timestamp: '00:38',
           sentiment: 'Positive'
         }
       ]
@@ -307,29 +340,42 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
           ...d,
           aiCallAttempts: d.aiCallAttempts + 1,
           lastCallOutcome: 'Interested',
-          lastContactedAt: 'Just now',
+          lastContactedAt: 'Just now (Simulated)',
           status: d.status === 'lead' ? 'contacted' : d.status
         };
       }
       return d;
     }));
 
+    setPassengers(prev => prev.map(p => {
+      if (p.phone === phone || p.name === targetName) {
+        return {
+          ...p,
+          callAttempts: (p.callAttempts || 0) + 1,
+          lastContactedAt: 'Just now (Simulated)'
+        };
+      }
+      return p;
+    }));
+
     return newRecord;
   };
 
   const resetToDefaults = () => {
-    localStorage.removeItem('xpool_drivers');
-    localStorage.removeItem('xpool_passengers');
-    localStorage.removeItem('xpool_calls');
-    localStorage.removeItem('xpool_tasks');
-    localStorage.removeItem('xpool_employees');
-    localStorage.removeItem('xpool_ai_agents');
+    localStorage.removeItem('xpool_drivers_v2');
+    localStorage.removeItem('xpool_passengers_v2');
+    localStorage.removeItem('xpool_calls_v2');
+    localStorage.removeItem('xpool_tasks_v2');
+    localStorage.removeItem('xpool_employees_v2');
+    localStorage.removeItem('xpool_ai_agents_v2');
+    localStorage.removeItem('xpool_company_profile_v2');
     setDrivers(INITIAL_DRIVERS);
     setPassengers(INITIAL_PASSENGERS);
     setCalls(INITIAL_CALLS);
     setTasks(INITIAL_TASKS);
     setEmployees(INITIAL_EMPLOYEES);
     setAiAgents(INITIAL_AI_AGENTS);
+    setCompanyProfile(DEFAULT_COMPANY_PROFILE);
   };
 
   return (
@@ -342,6 +388,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       aiAgents,
       liveCalls,
       kpiSummary,
+      companyProfile,
       addDriver,
       updateDriver,
       deleteDriver,
@@ -354,6 +401,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       addEmployee,
       updateEmployee,
       updateAgentConfig,
+      updateCompanyProfile,
       importLeads,
       triggerSimulationCall,
       resetToDefaults
@@ -370,4 +418,3 @@ export const useData = () => {
   }
   return context;
 };
-

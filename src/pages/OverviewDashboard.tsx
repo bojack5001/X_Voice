@@ -58,12 +58,12 @@ export const OverviewDashboard: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-poppins">
-              Executive Overview Dashboard
+              Overview Dashboard
             </h1>
-            <DemoBadge label="SIMULATED TELEPHONY & CRM" />
+            <DemoBadge label="SIMULATED TELEPHONY & CRM • DEMO ONLY" />
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            XPOOL Technology Private Limited • Real-time AI Voice Telephony & Driver Conversion Telemetry
+            DEMO ENVIRONMENT — NO REAL CUSTOMER DATA — NO REAL CALLS • All telemetry & conversion metrics are locally simulated
           </p>
         </div>
 
@@ -88,9 +88,10 @@ export const OverviewDashboard: React.FC = () => {
           <button
             onClick={() => setIsCallModalOpen(true)}
             className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 text-xs font-bold rounded-xl shadow-brand flex items-center gap-1.5 transition active:scale-95"
+            title="Dispatch manual AI voice call simulation"
           >
             <PhoneCall className="w-3.5 h-3.5" />
-            <span>Launch AI Call</span>
+            <span>Manual AI Call</span>
           </button>
         </div>
       </div>

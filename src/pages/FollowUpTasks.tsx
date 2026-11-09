@@ -39,7 +39,7 @@ export const FollowUpTasks: React.FC = () => {
     title: '',
     category: 'Callback' as TaskCategory,
     priority: 'High' as TaskPriority,
-    assignedToName: employees[0]?.name || 'Meena Sundari R',
+    assignedToName: employees[0]?.name || 'Demo CCE Specialist',
     assignedRole: 'Customer Care Executive' as UserRole,
     targetContactName: '',
     targetPhone: '',
@@ -110,7 +110,7 @@ export const FollowUpTasks: React.FC = () => {
       title: '',
       category: 'Callback',
       priority: 'High',
-      assignedToName: employees[0]?.name || 'Meena Sundari R',
+      assignedToName: employees[0]?.name || 'Demo CCE Specialist',
       assignedRole: 'Customer Care Executive',
       targetContactName: '',
       targetPhone: '',
@@ -128,12 +128,12 @@ export const FollowUpTasks: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-poppins">
-              Follow-up Tasks & Callback Scheduling
+              Follow-up Tasks
             </h1>
-            <DemoBadge label="TEAM TASK ASSIGNMENT" />
+            <DemoBadge label="SIMULATED TASK WORKFLOW" />
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Coordinate manual driver callbacks, document verification exceptions, and cross-team SLA resolutions
+            Coordinate manual driver callbacks, document verification reviews, and human escalation resolutions
           </p>
         </div>
 

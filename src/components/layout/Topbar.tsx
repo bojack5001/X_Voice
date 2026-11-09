@@ -69,9 +69,9 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
   const hasSearchResults = matchingDrivers.length > 0 || matchingPassengers.length > 0 || matchingCalls.length > 0;
 
   const notifications = [
-    { id: 1, title: 'Tamil Onboarding Call Completed', time: '5m ago', unread: true },
-    { id: 2, title: 'Ravi Teja uploaded Commercial Insurance', time: '22m ago', unread: true },
-    { id: 3, title: 'Escalation queued for Team Leader review', time: '1h ago', unread: false },
+    { id: 1, title: 'Tamil Onboarding Call Simulated', time: '5m ago', unread: true },
+    { id: 2, title: 'Demo Driver submitted commercial insurance', time: '22m ago', unread: true },
+    { id: 3, title: 'Escalation task queued for Team Leader review', time: '1h ago', unread: false },
   ];
 
   return (
@@ -213,14 +213,14 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
 
         {/* Right: Quick Action Buttons, Language Indicator, Role Switcher, Profile */}
         <div className="flex items-center gap-2.5 sm:gap-4">
-          {/* Quick AI Call button */}
+          {/* Manual AI Call button (9-step manual flow) */}
           <button
             onClick={() => setIsQuickCallOpen(true)}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-bold text-xs rounded-xl shadow-sm transition active:scale-95"
-            title="Launch test AI voice call simulation"
+            title="Launch verified manual AI voice call dispatch"
           >
             <PhoneCall className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">Quick AI Call</span>
+            <span className="hidden md:inline">Manual AI Call</span>
           </button>
 
           {/* Languages supported badge */}
@@ -247,9 +247,9 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
             </button>
 
             {isRoleDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 animate-in fade-in slide-in-from-top-1">
+              <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 animate-in fade-in slide-in-from-top-1">
                 <div className="px-3 py-1.5 border-b border-slate-100 text-[10px] uppercase font-bold text-slate-400 tracking-wider">
-                  Switch Active Persona
+                  Switch Active Persona (UI Simulation)
                 </div>
                 {availableRoles.map((role) => (
                   <button
@@ -266,6 +266,9 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
                     {currentUser.role === role && <CheckCircle2 className="w-3.5 h-3.5 text-amber-600" />}
                   </button>
                 ))}
+                <div className="px-3 py-2 border-t border-slate-100 text-[10px] text-slate-400 leading-tight">
+                  Security note: Frontend role simulator. Backend authorization will enforce access via Supabase RLS.
+                </div>
               </div>
             )}
           </div>

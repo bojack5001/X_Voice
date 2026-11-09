@@ -3,9 +3,9 @@ import { Employee } from '../types';
 export const INITIAL_EMPLOYEES: Employee[] = [
   {
     id: 'EMP-001',
-    name: 'Jaganathan Sundararajan',
-    email: 'jagan@xpool.in',
-    phone: '+91 98400 11000',
+    name: 'Demo CEO (Executive Leadership)',
+    email: 'ceo.demo@xpool.test',
+    phone: '+91 98000 00901',
     role: 'CEO',
     department: 'Executive Leadership',
     status: 'Active',
@@ -14,19 +14,19 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     lastActive: 'Just now',
     joinedDate: '2025-01-01',
     permissions: [
-      'Full Administrative Access',
+      'Full Administrative Access (Simulation)',
       'System Configuration',
       'AI Prompt Management',
-      'Financial Approvals',
-      'Role Assignment',
+      'Financial & Conversion Overview',
+      'Role Switcher & Audit Logs',
       'Data Export'
     ]
   },
   {
     id: 'EMP-002',
-    name: 'Deepika Narayanan',
-    email: 'deepika.n@xpool.in',
-    phone: '+91 98402 77112',
+    name: 'Demo HR Lead (People & Culture)',
+    email: 'hr.demo@xpool.test',
+    phone: '+91 98000 00902',
     role: 'HR',
     department: 'People & Culture',
     status: 'Active',
@@ -36,17 +36,16 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     joinedDate: '2025-04-15',
     permissions: [
       'Staff Directory Management',
-      'Onboarding Oversight',
-      'Performance Metrics Review',
-      'Payroll & Attendance',
-      'Employee Support'
+      'Onboarding Oversight & Verification Audit',
+      'Team Performance Metrics Review',
+      'Employee Roster Governance'
     ]
   },
   {
     id: 'EMP-003',
-    name: 'Dinesh Kumar Shanmugam',
-    email: 'dinesh.k@xpool.in',
-    phone: '+91 97890 55431',
+    name: 'Demo Team Leader (Tamil Nadu Ops)',
+    email: 'tl.tamil.demo@xpool.test',
+    phone: '+91 98000 00903',
     role: 'Team Leader',
     department: 'Driver Operations (Tamil Nadu)',
     status: 'Active',
@@ -58,15 +57,15 @@ export const INITIAL_EMPLOYEES: Employee[] = [
       'Live Call Monitoring & Intervention',
       'Human Escalation Takeover',
       'Task Allocation & Reassignment',
-      'Driver Approval & Verification',
-      'Team Queue Management'
+      'Driver Approval & Verification Review',
+      'Tamil Region Telephony Oversight'
     ]
   },
   {
     id: 'EMP-004',
-    name: 'Praveen Chalamalasetty',
-    email: 'praveen.c@xpool.in',
-    phone: '+91 96180 88209',
+    name: 'Demo Team Leader (Telangana & AP)',
+    email: 'tl.telugu.demo@xpool.test',
+    phone: '+91 98000 00904',
     role: 'Team Leader',
     department: 'Driver Operations (Telangana & AP)',
     status: 'Active',
@@ -77,64 +76,27 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     permissions: [
       'Live Call Monitoring & Intervention',
       'Human Escalation Takeover',
-      'Telugu Lead Pool Assignment',
-      'Driver KYC Approvals'
+      'Telugu Lead Pool Oversight',
+      'Driver KYC Exception Review'
     ]
   },
   {
     id: 'EMP-005',
-    name: 'Meena Sundari R',
-    email: 'meena.s@xpool.in',
-    phone: '+91 94441 33201',
+    name: 'Demo CCE Specialist (Support Desk)',
+    email: 'cce.demo@xpool.test',
+    phone: '+91 98000 00905',
     role: 'Customer Care Executive',
-    department: 'Tamil Telephony Support',
+    department: 'Telephony Customer Support',
     status: 'Active',
     activeTasksCount: 14,
     callsHandled: 890,
     lastActive: 'Online',
     joinedDate: '2025-09-01',
     permissions: [
-      'Outbound Call Initiation',
-      'Callback Resolution',
+      'Manual AI Call Dispatch (Verified Consent Only)',
+      'Scheduled Callback Resolution',
       'Document Review Support',
       'Driver Assistance Desk'
     ]
-  },
-  {
-    id: 'EMP-006',
-    name: 'Sravani V',
-    email: 'sravani.v@xpool.in',
-    phone: '+91 97001 99234',
-    role: 'Customer Care Executive',
-    department: 'Telugu Telephony Support',
-    status: 'Active',
-    activeTasksCount: 11,
-    callsHandled: 780,
-    lastActive: 'Online',
-    joinedDate: '2025-09-10',
-    permissions: [
-      'Outbound Call Initiation',
-      'Callback Resolution',
-      'Passenger Survey Assistance'
-    ]
-  },
-  {
-    id: 'EMP-007',
-    name: 'Arun George',
-    email: 'arun.g@xpool.in',
-    phone: '+91 98840 22198',
-    role: 'Customer Care Executive',
-    department: 'English & VIP Care',
-    status: 'On Leave',
-    activeTasksCount: 0,
-    callsHandled: 640,
-    lastActive: '2 days ago',
-    joinedDate: '2025-08-20',
-    permissions: [
-      'VIP Passenger Support',
-      'Corporate Account Escalations',
-      'Outbound Surveys'
-    ]
   }
 ];
-

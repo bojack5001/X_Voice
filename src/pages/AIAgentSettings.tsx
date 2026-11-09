@@ -17,6 +17,7 @@ import { AIAgentConfig, LanguageCode } from '../types';
 import { DemoBadge } from '../components/common/DemoBadge';
 import { Modal } from '../components/common/Modal';
 import { speakText, stopSpeech, playTelephonyTone } from '../utils/audioSynthesizer';
+import { SUPPORTED_LANGUAGES, ACTIVE_LANGUAGE_CODES } from '../config/languages';
 
 export const AIAgentSettings: React.FC = () => {
   const { aiAgents, updateAgentConfig } = useData();
@@ -83,12 +84,12 @@ export const AIAgentSettings: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-poppins">
-              AI Voice Agent Configuration
+              AI Voice Agents
             </h1>
-            <DemoBadge label="TAMIL • TELUGU • ENGLISH RECOGNITION" />
+            <DemoBadge label="MODULAR PROMPTS • SIMULATED AUDIO" />
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Configure conversational system prompts, synthetic voice characteristics, and regional fallback policies
+            Configure conversational system prompts, synthetic voice characteristics, and regional fallback policies (Tamil • Telugu • English)
           </p>
         </div>
 
@@ -105,7 +106,7 @@ export const AIAgentSettings: React.FC = () => {
       <div className="bg-amber-50 border border-amber-200/90 rounded-2xl p-4 flex items-center gap-3 text-xs text-amber-950">
         <Info className="w-5 h-5 text-amber-600 flex-shrink-0" />
         <p>
-          <strong>Notice:</strong> This interface stores voice prompts and hyperparameters in local frontend state. When ready for production backend integration, these schema hooks directly map to the OpenAI Realtime API session configurations and n8n webhooks.
+          <strong>Simulated Voice Engine:</strong> Dialects are tested locally via browser Web Speech & telephony audio tones. Verified speech recognition (STT) and carrier-grade latency benchmarks will be established during the backend telephony integration phase.
         </p>
       </div>
 
@@ -140,11 +141,11 @@ export const AIAgentSettings: React.FC = () => {
           {/* Dialect Tabs */}
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <span className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-              Regional Dialect Prompts
+              Regional Dialect Prompts (Modular)
             </span>
 
             <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs">
-              {(['Tamil', 'Telugu', 'English', 'Hindi'] as LanguageCode[]).map(lang => (
+              {ACTIVE_LANGUAGE_CODES.map(lang => (
                 <button
                   key={lang}
                   onClick={() => setActiveLangTab(lang)}

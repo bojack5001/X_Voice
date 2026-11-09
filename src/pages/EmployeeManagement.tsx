@@ -17,6 +17,7 @@ import { Employee, UserRole } from '../types';
 import { Badge } from '../components/common/Badge';
 import { Modal } from '../components/common/Modal';
 import { DemoBadge } from '../components/common/DemoBadge';
+import { ROLE_CAPABILITIES } from '../data/mockConfig';
 
 export const EmployeeManagement: React.FC = () => {
   const { employees, addEmployee, updateEmployee } = useData();
@@ -115,12 +116,12 @@ export const EmployeeManagement: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-poppins">
-              Employee Management & Access Control
+              Employee Roster & Role Governance
             </h1>
-            <DemoBadge label="ROLE-BASED ACCESS CONTROL" />
+            <DemoBadge label="ROLE UI SIMULATION • 4 ROLES" />
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            XPOOL internal roster across CEO, HR, Team Leader, and Customer Care Executive roles
+            Internal organizational roster across CEO, HR, Team Leader, and Customer Care Executive personas (Demo Environment)
           </p>
         </div>
 
@@ -131,6 +132,17 @@ export const EmployeeManagement: React.FC = () => {
           <Plus className="w-4 h-4" />
           <span>Add Employee</span>
         </button>
+      </div>
+
+      {/* Role-Based Architectural Notice */}
+      <div className="bg-amber-50 border border-amber-200/90 rounded-2xl p-4 flex items-start gap-3 text-xs text-amber-950">
+        <ShieldCheck className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+        <div className="space-y-1">
+          <strong className="block font-bold">Frontend Role Simulation Notice:</strong>
+          <p className="text-slate-700 leading-relaxed">
+            The role views and capabilities below demonstrate business workflows for <strong>CEO</strong>, <strong>HR</strong>, <strong>Team Leader</strong>, and <strong>Customer Care Executive</strong>. Frontend visibility alone does not enforce security boundaries; real authorization will be enforced at the API and database level via Supabase Row-Level Security (RLS) and JWT verification.
+          </p>
+        </div>
       </div>
 
       {/* Role Counts Strip */}

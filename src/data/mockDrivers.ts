@@ -3,9 +3,9 @@ import { Driver } from '../types';
 export const INITIAL_DRIVERS: Driver[] = [
   {
     id: 'DRV-1001',
-    name: 'Senthil Kumar V',
-    phone: '+91 98401 23456',
-    email: 'senthil.kumar@gmail.com',
+    name: 'Senthil Kumar V (Demo Driver)',
+    phone: '+91 98000 00001',
+    email: 'senthil.demo@xpool.test',
     city: 'Chennai',
     vehicleType: 'EV Auto',
     vehicleNumber: 'TN 09 BX 4412',
@@ -17,19 +17,22 @@ export const INITIAL_DRIVERS: Driver[] = [
     joinedDate: '2026-10-15',
     rating: 4.85,
     complianceScore: 98,
+    consentStatus: 'Consent Granted',
+    dncStatus: 'Not Listed',
+    nextEligibleContactDate: 'Eligible Now',
     documents: [
       { type: 'Aadhaar', number: 'XXXX-XXXX-4312', status: 'Verified', uploadedAt: '2026-10-15' },
       { type: 'Driving License', number: 'TN09 20180004123', status: 'Verified', uploadedAt: '2026-10-15' },
       { type: 'RC Book', number: 'TN09BX4412', status: 'Verified', uploadedAt: '2026-10-16' },
       { type: 'Vehicle Insurance', number: 'POL-ICICI-88421', status: 'Verified', uploadedAt: '2026-10-16' }
     ],
-    notes: 'Experienced green fleet EV operator. Completed 100% of EV training modules on first attempt.'
+    notes: 'Demo fleet driver. Completed EV onboarding modules. Explicit opt-in recorded via signup flow.'
   },
   {
     id: 'DRV-1002',
-    name: 'Ravi Teja Naidu',
-    phone: '+91 94408 87654',
-    email: 'raviteja.n@yahoo.com',
+    name: 'Ravi Teja Naidu (Demo Driver)',
+    phone: '+91 98000 00002',
+    email: 'raviteja.demo@xpool.test',
     city: 'Hyderabad',
     vehicleType: 'Sedan',
     vehicleNumber: 'TS 07 EA 9921',
@@ -40,19 +43,22 @@ export const INITIAL_DRIVERS: Driver[] = [
     lastContactedAt: '2026-11-09 10:15',
     joinedDate: '2026-11-02',
     complianceScore: 78,
+    consentStatus: 'Consent Granted',
+    dncStatus: 'Not Listed',
+    nextEligibleContactDate: 'Eligible Now',
     documents: [
       { type: 'Aadhaar', number: 'XXXX-XXXX-9122', status: 'Verified', uploadedAt: '2026-11-02' },
       { type: 'Driving License', number: 'TS07 20190008871', status: 'Verified', uploadedAt: '2026-11-03' },
       { type: 'RC Book', number: 'TS07EA9921', status: 'Pending Review', uploadedAt: '2026-11-09' },
       { type: 'Vehicle Insurance', number: 'CHOLA-882190', status: 'Pending Review', uploadedAt: '2026-11-09' }
     ],
-    notes: 'Commercial Dzire owner. AI Call confirmed he submitted commercial insurance copy via WhatsApp link.'
+    notes: 'Demo commercial sedan operator. Submitted insurance via demo portal link. Consent recorded on 2026-11-02.'
   },
   {
     id: 'DRV-1003',
-    name: 'Muruganandham P',
-    phone: '+91 97890 12399',
-    email: 'murugan.auto@gmail.com',
+    name: 'Muruganandham P (Demo Driver)',
+    phone: '+91 98000 00003',
+    email: 'murugan.demo@xpool.test',
     city: 'Madurai',
     vehicleType: 'Auto',
     vehicleNumber: 'TN 58 AB 2209',
@@ -63,19 +69,22 @@ export const INITIAL_DRIVERS: Driver[] = [
     lastContactedAt: '2026-11-09 11:45',
     joinedDate: '2026-11-04',
     complianceScore: 45,
+    consentStatus: 'Consent Granted',
+    dncStatus: 'Not Listed',
+    nextEligibleContactDate: '2026-11-09 18:30 (Scheduled)',
     documents: [
       { type: 'Aadhaar', number: 'XXXX-XXXX-6619', status: 'Verified', uploadedAt: '2026-11-04' },
       { type: 'Driving License', number: 'TN58 20150001290', status: 'Missing' },
       { type: 'RC Book', number: 'TN58AB2209', status: 'Missing' },
       { type: 'Vehicle Insurance', number: 'PENDING', status: 'Missing' }
     ],
-    notes: 'Requested callback after 6 PM due to airport trip duties. Needs assistance uploading DL photo.'
+    notes: 'Requested callback after 6:00 PM due to active driving duty. Consent active.'
   },
   {
     id: 'DRV-1004',
-    name: 'Kiran Kumar Reddy',
-    phone: '+91 98860 33412',
-    email: 'kiran.reddy87@gmail.com',
+    name: 'Kiran Kumar Reddy (Demo Driver)',
+    phone: '+91 98000 00004',
+    email: 'kiran.demo@xpool.test',
     city: 'Bengaluru',
     vehicleType: 'SUV',
     vehicleNumber: 'KA 03 MM 7819',
@@ -86,42 +95,48 @@ export const INITIAL_DRIVERS: Driver[] = [
     lastContactedAt: '2026-11-08 16:20',
     joinedDate: '2026-10-28',
     complianceScore: 92,
+    consentStatus: 'Consent Granted',
+    dncStatus: 'Not Listed',
+    nextEligibleContactDate: 'Eligible Now',
     documents: [
       { type: 'Aadhaar', number: 'XXXX-XXXX-1123', status: 'Verified', uploadedAt: '2026-10-28' },
       { type: 'Driving License', number: 'KA03 20160002194', status: 'Verified', uploadedAt: '2026-10-28' },
       { type: 'RC Book', number: 'KA03MM7819', status: 'Verified', uploadedAt: '2026-10-29' },
       { type: 'Vehicle Insurance', number: 'TATA-AIG-99120', status: 'Verified', uploadedAt: '2026-10-29' }
     ],
-    notes: 'Ertiga fleet driver. Currently at 85% completion in safety guidelines video course.'
+    notes: 'Demo Ertiga fleet driver. Currently at 85% completion in safety guidelines video course.'
   },
   {
     id: 'DRV-1005',
-    name: 'Annamalai Raja',
-    phone: '+91 94441 55290',
-    email: 'annamalai.r@gmail.com',
+    name: 'Annamalai Raja (Demo Lead)',
+    phone: '+91 98000 00005',
+    email: 'annamalai.demo@xpool.test',
     city: 'Coimbatore',
     vehicleType: 'Hatchback',
     vehicleNumber: 'TN 37 CY 8801',
     status: 'lead',
     preferredLanguage: 'Tamil',
     aiCallAttempts: 0,
-    lastCallOutcome: 'Not Reachable',
-    lastContactedAt: '2026-11-07 09:10',
+    lastCallOutcome: 'Never Contacted',
+    lastContactedAt: 'Never',
     joinedDate: '2026-11-06',
     complianceScore: 10,
+    consentStatus: 'Consent Unknown',
+    dncStatus: 'Not Listed',
+    nextEligibleContactDate: 'Blocked — Awaiting Explicit Consent',
     documents: [
       { type: 'Aadhaar', number: 'UNVERIFIED', status: 'Missing' },
       { type: 'Driving License', number: 'UNVERIFIED', status: 'Missing' },
       { type: 'RC Book', number: 'TN37CY8801', status: 'Missing' },
       { type: 'Vehicle Insurance', number: 'PENDING', status: 'Missing' }
     ],
-    notes: 'Inbound lead from Coimbatore Auto Expo campaign. Queued for first AI welcome greeting call.'
+    notes: 'Imported from trade expo sheet. Consent status is UNKNOWN. AI calling disabled until consent recorded.'
   },
   {
     id: 'DRV-1006',
-    name: 'Venkatesh Prasad',
-    phone: '+91 99002 44109',
-    email: 'venky.prasad90@outlook.com',
+    name: 'Venkatesh Prasad (Demo Driver)',
+    phone: '+91 98000 00006',
+    email: 'venky.demo@xpool.test',
     city: 'Bengaluru',
     vehicleType: 'Bike',
     vehicleNumber: 'KA 05 JJ 1902',
@@ -133,19 +148,22 @@ export const INITIAL_DRIVERS: Driver[] = [
     joinedDate: '2026-10-10',
     rating: 4.92,
     complianceScore: 100,
+    consentStatus: 'Consent Granted',
+    dncStatus: 'Not Listed',
+    nextEligibleContactDate: 'Eligible Now',
     documents: [
       { type: 'Aadhaar', number: 'XXXX-XXXX-9943', status: 'Verified', uploadedAt: '2026-10-10' },
       { type: 'Driving License', number: 'KA05 20170003310', status: 'Verified', uploadedAt: '2026-10-10' },
       { type: 'RC Book', number: 'KA05JJ1902', status: 'Verified', uploadedAt: '2026-10-11' },
       { type: 'Vehicle Insurance', number: 'BAJAJ-558129', status: 'Verified', uploadedAt: '2026-10-11' }
     ],
-    notes: 'Top performing bike-taxi partner in South Bengaluru. Eligible for tier 1 incentives.'
+    notes: 'Demo bike-taxi partner. Active opt-in recorded.'
   },
   {
     id: 'DRV-1007',
-    name: 'Nagaraju Goud',
-    phone: '+91 97011 22881',
-    email: 'nagaraju.goud@gmail.com',
+    name: 'Nagaraju Goud (Demo Lead)',
+    phone: '+91 98000 00007',
+    email: 'nagaraju.demo@xpool.test',
     city: 'Hyderabad',
     vehicleType: 'Auto',
     vehicleNumber: 'TS 09 UA 3012',
@@ -156,19 +174,22 @@ export const INITIAL_DRIVERS: Driver[] = [
     lastContactedAt: '2026-11-09 12:30',
     joinedDate: '2026-11-07',
     complianceScore: 30,
+    consentStatus: 'Consent Revoked',
+    dncStatus: 'DNC Active',
+    nextEligibleContactDate: 'Blocked — Opted Out / DNC Active',
     documents: [
       { type: 'Aadhaar', number: 'XXXX-XXXX-7712', status: 'Pending Review', uploadedAt: '2026-11-09' },
       { type: 'Driving License', number: 'TS09 20140004419', status: 'Missing' },
       { type: 'RC Book', number: 'TS09UA3012', status: 'Missing' },
       { type: 'Vehicle Insurance', number: 'PENDING', status: 'Missing' }
     ],
-    notes: 'Expressed strong interest in the 0% commission pilot program in Secunderabad.'
+    notes: 'Contact requested DNC registration on 2026-11-09. All automated and manual telephonic outreach is suppressed.'
   },
   {
     id: 'DRV-1008',
-    name: 'Karthikeyan S',
-    phone: '+91 98410 77319',
-    email: 'karthi.s@gmail.com',
+    name: 'Karthikeyan S (Demo Lead)',
+    phone: '+91 98000 00008',
+    email: 'karthi.demo@xpool.test',
     city: 'Chennai',
     vehicleType: 'Sedan',
     vehicleNumber: 'TN 02 BK 5520',
@@ -179,13 +200,15 @@ export const INITIAL_DRIVERS: Driver[] = [
     lastContactedAt: '2026-11-06 17:00',
     joinedDate: '2026-10-20',
     complianceScore: 15,
+    consentStatus: 'Consent Unknown',
+    dncStatus: 'Not Listed',
+    nextEligibleContactDate: 'Blocked — Requires Human Escalation Desk',
     documents: [
       { type: 'Aadhaar', number: 'XXXX-XXXX-5521', status: 'Verified', uploadedAt: '2026-10-20' },
       { type: 'Driving License', number: 'TN02 20120008821', status: 'Rejected', notes: 'Expired license' },
       { type: 'RC Book', number: 'TN02BK5520', status: 'Rejected', notes: 'Fitness certificate expired' },
       { type: 'Vehicle Insurance', number: 'EXP-2025', status: 'Rejected', notes: 'Expired policy' }
     ],
-    notes: 'Application declined due to multiple expired statutory vehicle fitness & license records.'
+    notes: 'Demo application declined due to statutory vehicle fitness and license expiry. Telephony outreach blocked.'
   }
 ];
-

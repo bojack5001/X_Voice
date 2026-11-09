@@ -19,7 +19,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { useData } from '../context/DataContext';
-import { Driver, DriverStatus, LanguageCode, VehicleType } from '../types';
+import { Driver, DriverStatus, LanguageCode, VehicleType, ConsentStatus, DncStatus } from '../types';
 import { Badge } from '../components/common/Badge';
 import { Modal } from '../components/common/Modal';
 import { CallSimulationDialog } from '../components/calls/CallSimulationDialog';
@@ -66,6 +66,8 @@ export const DriverOnboarding: React.FC = () => {
     vehicleType: 'Auto' as VehicleType,
     vehicleNumber: '',
     preferredLanguage: 'Tamil' as LanguageCode,
+    consentStatus: 'Consent Granted' as ConsentStatus,
+    dncStatus: 'Not Listed' as DncStatus,
     notes: ''
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -144,7 +146,7 @@ export const DriverOnboarding: React.FC = () => {
     addDriver({
       name: newDriverData.name,
       phone: newDriverData.phone,
-      email: newDriverData.email || `${newDriverData.name.toLowerCase().replace(/\s+/g, '')}@xpool.in`,
+      email: newDriverData.email || `${newDriverData.name.toLowerCase().replace(/[^a-z0-9]/g, '')}@demo.xpool.test`,
       city: newDriverData.city,
       vehicleType: newDriverData.vehicleType,
       vehicleNumber: newDriverData.vehicleNumber.toUpperCase(),
@@ -153,13 +155,16 @@ export const DriverOnboarding: React.FC = () => {
       aiCallAttempts: 0,
       joinedDate: new Date().toISOString().split('T')[0],
       complianceScore: 25,
+      consentStatus: newDriverData.consentStatus,
+      dncStatus: newDriverData.dncStatus,
+      nextEligibleContactDate: newDriverData.consentStatus === 'Consent Granted' ? 'Eligible Now' : 'Blocked — Awaiting Explicit Consent',
       documents: [
         { type: 'Aadhaar', number: 'Pending', status: 'Missing' },
         { type: 'Driving License', number: 'Pending', status: 'Missing' },
         { type: 'RC Book', number: newDriverData.vehicleNumber.toUpperCase(), status: 'Missing' },
         { type: 'Vehicle Insurance', number: 'Pending', status: 'Missing' }
       ],
-      notes: newDriverData.notes || 'Manually added driver profile.'
+      notes: newDriverData.notes || 'Manually added demo driver profile. Manual outreach only.'
     });
 
     setIsAddDriverOpen(false);
@@ -171,6 +176,8 @@ export const DriverOnboarding: React.FC = () => {
       vehicleType: 'Auto',
       vehicleNumber: '',
       preferredLanguage: 'Tamil',
+      consentStatus: 'Consent Granted',
+      dncStatus: 'Not Listed',
       notes: ''
     });
     setFormErrors({});
@@ -310,6 +317,7 @@ export const DriverOnboarding: React.FC = () => {
                 <th className="py-3 px-4">Driver Profile</th>
                 <th className="py-3 px-4">City & Vehicle</th>
                 <th className="py-3 px-4">Language</th>
+                <th className="py-3 px-4">Consent & Eligibility</th>
                 <th className="py-3 px-4">Funnel Status</th>
                 <th className="py-3 px-4">KYC Compliance</th>
                 <th className="py-3 px-4">AI Telephony</th>
@@ -319,7 +327,7 @@ export const DriverOnboarding: React.FC = () => {
             <tbody className="divide-y divide-slate-100">
               {paginatedDrivers.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="text-center py-12 text-slate-400">
+                  <td colSpan={8} className="text-center py-12 text-slate-400">
                     <Car className="w-10 h-10 mx-auto text-slate-300 mb-2" />
                     No driver profiles match your filter criteria.
                   </td>
@@ -328,6 +336,7 @@ export const DriverOnboarding: React.FC = () => {
                 paginatedDrivers.map((driver) => {
                   const verifiedDocs = driver.documents.filter(d => d.status === 'Verified').length;
                   const totalDocs = driver.documents.length;
+                  const isEligible = driver.consentStatus === 'Consent Granted' && driver.dncStatus !== 'DNC Active';
 
                   return (
                     <tr 
@@ -359,11 +368,31 @@ export const DriverOnboarding: React.FC = () => {
                         <span className={`px-2 py-0.5 rounded text-[11px] font-semibold ${
                           driver.preferredLanguage === 'Tamil' ? 'bg-amber-100 text-amber-900' :
                           driver.preferredLanguage === 'Telugu' ? 'bg-orange-100 text-orange-900' :
-                          driver.preferredLanguage === 'Hindi' ? 'bg-purple-100 text-purple-900' :
                           'bg-blue-100 text-blue-900'
                         }`}>
                           {driver.preferredLanguage}
                         </span>
+                      </td>
+
+                      {/* Consent & Eligibility Indicator */}
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-1">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                            driver.consentStatus === 'Consent Granted' ? 'bg-emerald-100 text-emerald-800' :
+                            driver.consentStatus === 'Consent Revoked' ? 'bg-rose-100 text-rose-800' :
+                            'bg-amber-100 text-amber-800'
+                          }`}>
+                            {driver.consentStatus || 'Consent Unknown'}
+                          </span>
+                          {driver.dncStatus === 'DNC Active' && (
+                            <span className="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 text-[10px] font-bold">
+                              DNC
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-[10px] text-slate-500 mt-0.5 max-w-[150px] truncate" title={driver.nextEligibleContactDate}>
+                          {driver.nextEligibleContactDate || 'Eligible Now'}
+                        </div>
                       </td>
 
                       {/* Status */}
@@ -397,7 +426,7 @@ export const DriverOnboarding: React.FC = () => {
                         </div>
                         <div className="text-[10px] text-slate-400 flex items-center gap-1">
                           <Clock className="w-2.5 h-2.5" />
-                          <span>{driver.lastContactedAt || 'Queued'}</span>
+                          <span>{driver.lastContactedAt || 'Queued'} (Attempts: {driver.aiCallAttempts})</span>
                         </div>
                       </td>
 
@@ -414,8 +443,13 @@ export const DriverOnboarding: React.FC = () => {
 
                           <button
                             onClick={(e) => handleStartCall(driver, e)}
-                            className="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs flex items-center gap-1 shadow-sm transition active:scale-95"
-                            title="Start AI Call Simulation"
+                            disabled={!isEligible}
+                            className="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 disabled:opacity-35 disabled:cursor-not-allowed text-slate-950 font-bold rounded-lg text-xs flex items-center gap-1 shadow-sm transition active:scale-95"
+                            title={
+                              !isEligible 
+                                ? `Outbound calling blocked: ${driver.consentStatus}${driver.dncStatus === 'DNC Active' ? ' (DNC Active)' : ''}` 
+                                : 'Launch manual AI call sequence'
+                            }
                           >
                             <PhoneCall className="w-3 h-3" />
                             <span>Start AI Call</span>
@@ -469,15 +503,23 @@ export const DriverOnboarding: React.FC = () => {
                 Close
               </button>
               <button
+                disabled={selectedDriver.consentStatus !== 'Consent Granted' || selectedDriver.dncStatus === 'DNC Active'}
                 onClick={() => {
                   const d = selectedDriver;
                   setSelectedDriver(null);
                   handleStartCall(d);
                 }}
-                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 text-xs font-bold rounded-xl shadow-brand flex items-center gap-1.5 transition active:scale-95"
+                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-950 text-xs font-bold rounded-xl shadow-brand flex items-center gap-1.5 transition active:scale-95"
+                title={
+                  selectedDriver.consentStatus !== 'Consent Granted' 
+                    ? `Calling disabled: ${selectedDriver.consentStatus}` 
+                    : selectedDriver.dncStatus === 'DNC Active' 
+                    ? 'Calling disabled: DNC Active' 
+                    : 'Launch manual AI call sequence'
+                }
               >
                 <PhoneCall className="w-4 h-4" />
-                <span>Trigger AI Call</span>
+                <span>Trigger Manual AI Call</span>
               </button>
             </>
           }
@@ -490,16 +532,25 @@ export const DriverOnboarding: React.FC = () => {
                 <span className="mt-0.5 inline-block">{getStatusBadge(selectedDriver.status)}</span>
               </div>
               <div>
-                <span className="text-slate-400 block text-[10px] uppercase font-semibold">City & Zone</span>
-                <span className="font-bold text-slate-900 mt-0.5 block">{selectedDriver.city}</span>
+                <span className="text-slate-400 block text-[10px] uppercase font-semibold">Consent Status</span>
+                <span className={`font-bold mt-0.5 block ${
+                  selectedDriver.consentStatus === 'Consent Granted' ? 'text-emerald-700' :
+                  selectedDriver.consentStatus === 'Consent Revoked' ? 'text-rose-700' : 'text-amber-700'
+                }`}>
+                  {selectedDriver.consentStatus || 'Consent Unknown'}
+                </span>
               </div>
               <div>
-                <span className="text-slate-400 block text-[10px] uppercase font-semibold">Preferred Dialect</span>
-                <span className="font-bold text-amber-700 mt-0.5 block">{selectedDriver.preferredLanguage}</span>
+                <span className="text-slate-400 block text-[10px] uppercase font-semibold">DNC Registry</span>
+                <span className={`font-bold mt-0.5 block ${selectedDriver.dncStatus === 'DNC Active' ? 'text-rose-700' : 'text-emerald-700'}`}>
+                  {selectedDriver.dncStatus || 'Not Listed'}
+                </span>
               </div>
               <div>
-                <span className="text-slate-400 block text-[10px] uppercase font-semibold">Compliance Index</span>
-                <span className="font-bold text-emerald-600 mt-0.5 block">{selectedDriver.complianceScore}% Verified</span>
+                <span className="text-slate-400 block text-[10px] uppercase font-semibold">Outreach Eligibility</span>
+                <span className="font-bold text-slate-800 mt-0.5 block truncate" title={selectedDriver.nextEligibleContactDate}>
+                  {selectedDriver.nextEligibleContactDate || 'Eligible Now'}
+                </span>
               </div>
             </div>
 
@@ -682,25 +733,39 @@ export const DriverOnboarding: React.FC = () => {
             </div>
           </div>
 
-          <div>
-            <label className="block font-semibold text-slate-700 mb-1">Preferred Dialect</label>
-            <select
-              value={newDriverData.preferredLanguage}
-              onChange={(e) => setNewDriverData({ ...newDriverData, preferredLanguage: e.target.value as LanguageCode })}
-              className="w-full px-3 py-2 border border-slate-300 rounded-xl bg-white focus:ring-2 focus:ring-amber-500 focus:outline-none"
-            >
-              <option value="Tamil">Tamil (தமிழ்)</option>
-              <option value="Telugu">Telugu (తెలుగు)</option>
-              <option value="English">English</option>
-              <option value="Hindi">Hindi (हिंदी)</option>
-            </select>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block font-semibold text-slate-700 mb-1">Preferred Dialect</label>
+              <select
+                value={newDriverData.preferredLanguage}
+                onChange={(e) => setNewDriverData({ ...newDriverData, preferredLanguage: e.target.value as LanguageCode })}
+                className="w-full px-3 py-2 border border-slate-300 rounded-xl bg-white focus:ring-2 focus:ring-amber-500 focus:outline-none"
+              >
+                <option value="Tamil">Tamil (தமிழ்)</option>
+                <option value="Telugu">Telugu (తెలుగు)</option>
+                <option value="English">English</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block font-semibold text-slate-700 mb-1">Consent Status *</label>
+              <select
+                value={newDriverData.consentStatus}
+                onChange={(e) => setNewDriverData({ ...newDriverData, consentStatus: e.target.value as ConsentStatus })}
+                className="w-full px-3 py-2 border border-slate-300 rounded-xl bg-white focus:ring-2 focus:ring-amber-500 focus:outline-none font-semibold"
+              >
+                <option value="Consent Granted">Consent Granted</option>
+                <option value="Consent Unknown">Consent Unknown</option>
+                <option value="Consent Revoked">Consent Revoked</option>
+              </select>
+            </div>
           </div>
 
           <div>
             <label className="block font-semibold text-slate-700 mb-1">Lead Notes</label>
             <textarea
               rows={2}
-              placeholder="e.g. Interested in airport queue permit"
+              placeholder="e.g. Registered via partner demo portal"
               value={newDriverData.notes}
               onChange={(e) => setNewDriverData({ ...newDriverData, notes: e.target.value })}
               className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"
@@ -719,7 +784,7 @@ export const DriverOnboarding: React.FC = () => {
               type="submit"
               className="px-5 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold rounded-xl shadow-brand hover:from-amber-600 hover:to-orange-600"
             >
-              Save & Queue for AI Call
+              Save Driver to Pipeline (No Auto-Call)
             </button>
           </div>
         </form>

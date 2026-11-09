@@ -36,6 +36,17 @@ export const ReportsAnalytics: React.FC = () => {
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
   const handleExportCSV = () => {
+    const csvContent = "data:text/csv;charset=utf-8," + 
+      "Category,City,Leads_Ingested,Onboarded_Drivers,Conversion_Rate,Avg_Call_Duration\n" +
+      CITY_PERFORMANCE.map(c => `Regional_Demo,${c.city},${c.leads},${c.onboarded},${c.rate},${c.avgDuration}`).join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `XPOOL_Demo_Analytics_${dateRange}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
     setDownloadSuccess(true);
     setTimeout(() => setDownloadSuccess(false), 2500);
   };
@@ -47,12 +58,12 @@ export const ReportsAnalytics: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-poppins">
-              Executive Reports & Performance Analytics
+              Reports & Analytics
             </h1>
-            <DemoBadge label="AGGREGATED KPI INTELLIGENCE" />
+            <DemoBadge label="SIMULATED TELEMETRY • DEMO DATA" />
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Operational conversion telemetry, regional voice connectivity, and customer service team metrics
+            Operational conversion telemetry, regional voice connectivity, and customer service team metrics (Demo Environment)
           </p>
         </div>
 

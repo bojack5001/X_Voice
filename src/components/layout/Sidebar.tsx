@@ -42,7 +42,7 @@ interface NavGroup {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
-  const { tasks, liveCalls } = useData();
+  const { tasks, liveCalls, companyProfile } = useData();
 
   const pendingTasksCount = tasks.filter(t => t.status !== 'Completed').length;
   const activeLiveCallsCount = liveCalls.filter(c => c.status === 'in-progress').length;
@@ -54,22 +54,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         { name: 'Overview', path: '/', icon: LayoutDashboard },
         { name: 'Driver Onboarding', path: '/drivers', icon: Users },
         { name: 'Excel Lead Import', path: '/leads/import', icon: FileSpreadsheet, badge: 'XLSX' },
-        { name: 'Passenger Management', path: '/passengers', icon: UserCheck },
+        { name: 'Passenger Engagement', path: '/passengers', icon: UserCheck },
         { name: 'Driver Engagement', path: '/driver-engagement', icon: HeartHandshake },
       ]
     },
     {
-      title: 'AI TELEPHONY',
+      title: 'AI TELEPHONY (SIMULATED)',
       items: [
         { 
           name: 'Live Call Monitor', 
           path: '/calls/live', 
           icon: Radio, 
-          liveBadge: `${activeLiveCallsCount} LIVE`,
-          pulse: true 
+          liveBadge: 'SIMULATED',
+          pulse: false 
         },
-        { name: 'AI Call Dispatch', path: '/calls/management', icon: PhoneCall },
-        { name: 'Call History & Audio', path: '/calls/history', icon: History },
+        { name: 'Manual AI Call Dispatch', path: '/calls/management', icon: PhoneCall },
+        { name: 'Call History', path: '/calls/history', icon: History },
       ]
     },
     {
@@ -182,12 +182,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         {/* Tenant Footer */}
         <div className="p-3 border-t border-slate-800/80 bg-slate-950">
           <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-900 border border-slate-800">
-            <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+            <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div className="overflow-hidden">
-              <span className="text-xs font-semibold text-white truncate block">XPOOL Tech Pvt Ltd</span>
-              <span className="text-[10px] text-slate-400 truncate block">HQ: Chennai, India</span>
+              <span className="text-xs font-semibold text-white truncate block">{companyProfile.brandName}</span>
+              <span className="text-[10px] text-amber-400/90 truncate block">DEMO ENVIRONMENT</span>
             </div>
           </div>
         </div>

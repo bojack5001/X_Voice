@@ -7,9 +7,15 @@ export type DriverStatus =
   | 'onboarded' 
   | 'rejected';
 
-export type LanguageCode = 'Tamil' | 'English' | 'Telugu' | 'Hindi';
+// Initial supported languages per Task 002: Tamil, Telugu, English.
+// Modular configuration in src/config/languages.ts allows adding more later.
+export type LanguageCode = 'Tamil' | 'English' | 'Telugu';
 
 export type VehicleType = 'Auto' | 'Bike' | 'Hatchback' | 'Sedan' | 'SUV' | 'EV Auto';
+
+export type ConsentStatus = 'Consent Granted' | 'Consent Unknown' | 'Consent Revoked';
+
+export type DncStatus = 'Not Listed' | 'DNC Active';
 
 export interface KYCDocument {
   type: 'Aadhaar' | 'Driving License' | 'RC Book' | 'Vehicle Insurance' | 'Police Verification';
@@ -37,6 +43,10 @@ export interface Driver {
   rating?: number;
   complianceScore: number; // 0 - 100
   notes: string;
+  // Task 002 Consent & Eligibility Attributes
+  consentStatus: ConsentStatus;
+  dncStatus: DncStatus;
+  nextEligibleContactDate: string;
 }
 
 export type PassengerStatus = 'Registered' | 'Pending Verification' | 'VIP' | 'Blocked';
@@ -58,6 +68,12 @@ export interface Passenger {
   joinedDate: string;
   preferredPickupZone: string;
   notes?: string;
+  // Task 002 Consent & Eligibility Attributes
+  consentStatus: ConsentStatus;
+  dncStatus: DncStatus;
+  lastContactedAt?: string;
+  callAttempts: number;
+  nextEligibleContactDate: string;
 }
 
 export type CallStatus = 'queued' | 'ringing' | 'in-progress' | 'completed' | 'failed' | 'transferred';
@@ -158,6 +174,8 @@ export interface LeadImportRow {
   city: string;
   vehicleType: string;
   language: string;
+  consentStatus: ConsentStatus;
+  dncStatus?: DncStatus;
   status: 'valid' | 'invalid' | 'duplicate';
   errorDetails?: string;
 }
@@ -171,4 +189,15 @@ export interface DashboardKPISummary {
   successfulOnboarding: number;
   pendingFollowups: number;
   humanEscalations: number;
+}
+
+export interface CompanyProfile {
+  legalName: string;
+  brandName: string;
+  cin: string;
+  registeredOffice: string;
+  supportEmail: string;
+  phone: string;
+  website: string;
+  environmentNotice: string;
 }

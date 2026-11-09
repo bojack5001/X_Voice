@@ -27,7 +27,7 @@ export const MainLayout: React.FC = () => {
           {/* Footer note */}
           <footer className="py-4 px-6 border-t border-slate-200 text-center text-xs text-slate-400 bg-white">
             <p>
-              © 2026 <strong>XPOOL Technology Private Limited</strong>. Enterprise AI Voice & Telephony Operations Suite. All mock audio, transcripts, and telemetry are locally simulated.
+              <strong>DEMO ENVIRONMENT — NO REAL CUSTOMER DATA — NO REAL CALLS</strong> • © 2026 XPOOL Technology. All telephony streams, transcripts, and KPIs are locally simulated for frontend evaluation.
             </p>
           </footer>
         </div>

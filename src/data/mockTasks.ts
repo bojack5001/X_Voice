@@ -7,14 +7,14 @@ export const INITIAL_TASKS: FollowUpTask[] = [
     category: 'Callback',
     priority: 'High',
     status: 'Pending',
-    assignedToName: 'Meena Sundari R',
+    assignedToName: 'Demo CCE Specialist (Support Desk)',
     assignedRole: 'Customer Care Executive',
-    targetContactName: 'Muruganandham P',
-    targetPhone: '+91 97890 12399',
+    targetContactName: 'Muruganandham P (Demo Driver)',
+    targetPhone: '+91 98000 00003',
     targetType: 'Driver',
     dueDate: '2026-11-09 18:30',
     createdDate: '2026-11-09 11:45',
-    notes: 'Driver was on an active trip during the morning AI call. Requested Tamil guidance after 6:00 PM.'
+    notes: 'Driver requested callback after 6:00 PM for Tamil RC guidance. Consent verified.'
   },
   {
     id: 'TSK-302',
@@ -22,14 +22,14 @@ export const INITIAL_TASKS: FollowUpTask[] = [
     category: 'Doc Review',
     priority: 'Medium',
     status: 'In Progress',
-    assignedToName: 'Praveen Chalamalasetty',
+    assignedToName: 'Demo Team Leader (Telangana & AP)',
     assignedRole: 'Team Leader',
-    targetContactName: 'Ravi Teja Naidu',
-    targetPhone: '+91 94408 87654',
+    targetContactName: 'Ravi Teja Naidu (Demo Driver)',
+    targetPhone: '+91 98000 00002',
     targetType: 'Driver',
     dueDate: '2026-11-09 16:00',
     createdDate: '2026-11-09 10:15',
-    notes: 'Insurance photo received via WhatsApp webhook. Check endorsement policy date & comprehensive coverage.'
+    notes: 'Insurance photo received via demo portal. Verify policy dates and comprehensive endorsement.'
   },
   {
     id: 'TSK-303',
@@ -37,59 +37,58 @@ export const INITIAL_TASKS: FollowUpTask[] = [
     category: 'Human Escalation',
     priority: 'Urgent',
     status: 'In Progress',
-    assignedToName: 'Dinesh Kumar Shanmugam',
+    assignedToName: 'Demo Team Leader (Tamil Nadu Ops)',
     assignedRole: 'Team Leader',
-    targetContactName: 'Karthikeyan S',
-    targetPhone: '+91 98410 77319',
+    targetContactName: 'Karthikeyan S (Demo Lead)',
+    targetPhone: '+91 98000 00008',
     targetType: 'Driver',
     dueDate: '2026-11-09 14:00',
     createdDate: '2026-11-08 17:05',
-    notes: 'AI Call detected heated response on fitness certificate rejection. Needs diplomatic manager discussion.'
+    notes: 'Fitness certificate expired. Requires supervisor review. Outbound calling blocked until resolved.'
   },
   {
     id: 'TSK-304',
-    title: 'Re-engagement check on churn-risk passenger Bhanu Chander',
+    title: 'Follow-up resolution on commute feedback: Priya Dharshini',
     category: 'VIP Support',
     priority: 'Low',
     status: 'Pending',
-    assignedToName: 'Sravani V',
+    assignedToName: 'Demo CCE Specialist (Support Desk)',
     assignedRole: 'Customer Care Executive',
-    targetContactName: 'Bhanu Chander R',
-    targetPhone: '+91 96180 44912',
+    targetContactName: 'Priya Dharshini (Demo Passenger)',
+    targetPhone: '+91 98000 00101',
     targetType: 'Passenger',
     dueDate: '2026-11-10 11:00',
     createdDate: '2026-11-08 14:20',
-    notes: 'Passenger experienced 2 driver cancellations last month. Offer ₹150 apology credit in Telugu.'
+    notes: 'Commuter shared route enhancement request for OMR corridor. Consent verified.'
   },
   {
     id: 'TSK-305',
-    title: 'Weekly compliance audit on EV fleet subsidies documentation',
+    title: 'Weekly compliance audit on EV fleet onboarding documentation',
     category: 'Doc Review',
     priority: 'High',
     status: 'Pending',
-    assignedToName: 'Deepika Narayanan',
+    assignedToName: 'Demo HR Lead (People & Culture)',
     assignedRole: 'HR',
     targetContactName: 'Fleet Operations Pool',
-    targetPhone: '+91 98400 11000',
+    targetPhone: '+91 98000 00901',
     targetType: 'Driver',
     dueDate: '2026-11-11 17:00',
     createdDate: '2026-11-07 09:00',
-    notes: 'Ensure all newly onboarded EV auto drivers have submitted state subsidy registration affidavits.'
+    notes: 'Audit mock onboarding records to ensure all active drivers have verified compliance scores.'
   },
   {
     id: 'TSK-306',
-    title: 'Executive review of AI Telephony connectivity metrics for Q4',
+    title: 'Executive review of demo telephony connectivity and compliance',
     category: 'Compliance Check',
     priority: 'Medium',
     status: 'Completed',
-    assignedToName: 'Jaganathan Sundararajan',
+    assignedToName: 'Demo CEO (Executive Leadership)',
     assignedRole: 'CEO',
     targetContactName: 'Executive Board',
-    targetPhone: '+91 98400 11000',
+    targetPhone: '+91 98000 00901',
     targetType: 'Driver',
     dueDate: '2026-11-08 18:00',
     createdDate: '2026-11-05 10:00',
-    notes: 'Reviewed South India regional call answer rates (82.4% target met).'
+    notes: 'Reviewed demo telemetry pipelines. Confirmed zero automated dial-out policy is enforced.'
   }
 ];
-

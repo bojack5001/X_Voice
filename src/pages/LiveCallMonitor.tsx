@@ -55,19 +55,19 @@ export const LiveCallMonitor: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-poppins">
-              Live Telephony Call Monitor
+              Live Call Monitor
             </h1>
-            <DemoBadge label="REAL-TIME CONCURRENCY STREAM" />
+            <DemoBadge label="SIMULATED TELEPHONY CHANNELS • DEMO ONLY" />
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Active multi-lingual SIP voice channels with live speech streaming, sentiment monitoring & supervisor takeover
+            Locally simulated multi-lingual voice streams demonstrating sentiment monitoring, speech transcript generation & supervisor takeover
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1.5 rounded-xl bg-red-500/10 text-red-600 border border-red-500/20 text-xs font-bold flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-            {liveCalls.filter(c => c.status === 'in-progress').length} Active Voice Streams
+          <span className="px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-800 border border-amber-300 text-xs font-bold flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-amber-500" />
+            {liveCalls.filter(c => c.status === 'in-progress').length} Simulated Streams (Demo Only)
           </span>
         </div>
       </div>
@@ -174,9 +174,9 @@ export const LiveCallMonitor: React.FC = () => {
           <div className="space-y-4 text-xs">
             <div className="bg-slate-900 text-white p-4 rounded-xl space-y-3">
               <div className="flex items-center justify-between text-slate-400 text-xs">
-                <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Live Stream Tapped (Muted Operator)
+                <span className="flex items-center gap-1.5 text-amber-400 font-bold">
+                  <span className="w-2 h-2 rounded-full bg-amber-400" />
+                  Simulated Stream Tapped (Muted Operator • Demo)
                 </span>
                 <span className="font-mono text-amber-400">
                   {formatDuration(activeListeningCall.durationSeconds)}

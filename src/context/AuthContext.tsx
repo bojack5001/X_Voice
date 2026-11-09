@@ -17,7 +17,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   
   // Default to CEO
   const [currentUser, setCurrentUser] = useState<Employee>(() => {
-    const saved = localStorage.getItem('xpool_current_user');
+    const saved = localStorage.getItem('xpool_current_user_v2');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    localStorage.setItem('xpool_current_user', JSON.stringify(currentUser));
+    localStorage.setItem('xpool_current_user_v2', JSON.stringify(currentUser));
   }, [currentUser]);
 
   const switchRole = (role: UserRole) => {
@@ -55,4 +55,3 @@ export const useAuth = () => {
   }
   return context;
 };
-

@@ -3,8 +3,8 @@ import { CallRecord } from '../types';
 export const INITIAL_CALLS: CallRecord[] = [
   {
     id: 'CALL-8801',
-    contactName: 'Muruganandham P',
-    contactPhone: '+91 97890 12399',
+    contactName: 'Muruganandham P (Demo Driver)',
+    contactPhone: '+91 98000 00003',
     contactType: 'Driver',
     agentName: 'XPOOL Driver Onboarder (Tamil)',
     language: 'Tamil',
@@ -14,7 +14,7 @@ export const INITIAL_CALLS: CallRecord[] = [
     outcome: 'Callback Requested',
     sentiment: 'Neutral',
     audioDuration: '02:44',
-    keyNotes: 'Driver is on road driving passenger in Madurai. Requested callback after 6:00 PM for RC upload guidance.',
+    keyNotes: 'Demo call: Driver driving passenger in Madurai. Explicit consent confirmed. Requested callback after 6:00 PM for RC guidance.',
     actionItem: 'Task scheduled: Callback at 18:30 IST by Tamil CCE team.',
     transcript: [
       {
@@ -43,7 +43,7 @@ export const INITIAL_CALLS: CallRecord[] = [
       },
       {
         speaker: 'AI Agent',
-        text: 'ரொம்ப நன்றி சார்! மாலை 6:30 மணிக்கு எங்கள் குழு உங்களுக்கு அழைக்கும். வாட்ஸ்அப் வழியாகவும் லிங்க் அனுப்பி வைக்கிறோம். பாதுகாப்பான பயணம் அமைய வாழ்த்துக்கள்!',
+        text: 'ரொம்ப நன்றி சார்! மாலை 6:30 மணிக்கு எங்கள் குழு உங்களுக்கு அழைக்கும். பாதுகாப்பான பயணம் அமைய வாழ்த்துக்கள்!',
         timestamp: '00:58',
         sentiment: 'Positive'
       }
@@ -51,10 +51,10 @@ export const INITIAL_CALLS: CallRecord[] = [
   },
   {
     id: 'CALL-8802',
-    contactName: 'Ravi Teja Naidu',
-    contactPhone: '+91 94408 87654',
+    contactName: 'Ravi Teja Naidu (Demo Driver)',
+    contactPhone: '+91 98000 00002',
     contactType: 'Driver',
-    agentName: 'XPOOL Doc Verification AI (Telugu)',
+    agentName: 'XPOOL Document Bot (Telugu)',
     language: 'Telugu',
     status: 'completed',
     startTime: '2026-11-09 10:12:00',
@@ -62,7 +62,7 @@ export const INITIAL_CALLS: CallRecord[] = [
     outcome: 'Docs Submitted',
     sentiment: 'Positive',
     audioDuration: '03:18',
-    keyNotes: 'RC copy and vehicle insurance document verified over WhatsApp OCR portal link during call.',
+    keyNotes: 'Demo call: RC copy and vehicle insurance document verified over demo link during call.',
     actionItem: 'Ready for background check verification approval.',
     transcript: [
       {
@@ -79,153 +79,74 @@ export const INITIAL_CALLS: CallRecord[] = [
       },
       {
         speaker: 'AI Agent',
-        text: 'ధన్యవాదాలు రవి గారు. మీ చూలా ఇన్సూరెన్స్ పాలసీ మా సిస్టమ్‌లో నమోదైంది. మీ వెరిఫికేషన్ ప్రక్రియ 4 గంటల్లో పూర్తవుతుంది. మీరు మొదటి వారం 0% కమిషన్ స్కీమ్‌కి అర్హులయ్యారు!',
+        text: 'అవును రవి గారు, మీ డాక్యుమెంట్ అందింది. పరిశీలన పూర్తయిన వెంటనే మీ ఖాతా ఆక్టివేట్ అవుతుంది.',
         timestamp: '00:36',
-        sentiment: 'Positive'
-      },
-      {
-        speaker: 'Customer',
-        text: 'చాలా మంచిది అండి! డ్రైవర్ యాప్ డౌన్‌లోడ్ లింక్ కూడా పంపండి.',
-        timestamp: '00:52',
-        sentiment: 'Positive'
-      },
-      {
-        speaker: 'AI Agent',
-        text: 'తప్పకుండా రవి గారు, మీ మొబైల్ నంబర్‌కు ఇప్పుడే ఎస్ఎంఎస్ పంపించాము. ఎక్స్‌పూల్‌కి స్వాగతం!',
-        timestamp: '01:06',
         sentiment: 'Positive'
       }
     ]
   },
   {
     id: 'CALL-8803',
-    contactName: 'Ananya Sharma',
-    contactPhone: '+91 99018 77621',
-    contactType: 'Passenger',
-    agentName: 'XPOOL Passenger Engagement Bot',
+    contactName: 'Kiran Kumar Reddy (Demo Driver)',
+    contactPhone: '+91 98000 00004',
+    contactType: 'Driver',
+    agentName: 'XPOOL Driver Onboarder (English)',
     language: 'English',
     status: 'completed',
-    startTime: '2026-11-09 09:40:22',
-    durationSeconds: 142,
-    outcome: 'Interested',
+    startTime: '2026-11-08 16:15:00',
+    durationSeconds: 135,
+    outcome: 'Completed',
     sentiment: 'Positive',
-    audioDuration: '02:22',
-    keyNotes: 'Passenger appreciated the Koramangala daily commute discount pass. Added ₹100 credit voucher to app wallet.',
-    actionItem: 'Promo coupon WELCOMEBACK100 issued.',
+    audioDuration: '02:15',
+    keyNotes: 'Demo call: Driver completed briefing on Bangalore airport SUV pooling guidelines.',
+    actionItem: 'Enrolled in Tier-1 airport fleet group.',
     transcript: [
       {
         speaker: 'AI Agent',
-        text: 'Good morning Ms. Ananya! This is Maya from XPOOL AI Connect. We noticed you haven\'t taken a ride from Koramangala recently, and we wanted to check how your experience was.',
+        text: 'Hello Mr. Kiran! This is Maya from XPOOL Onboarding. We received your verified documents for the Ertiga SUV.',
         timestamp: '00:04',
         sentiment: 'Neutral'
       },
       {
         speaker: 'Customer',
-        text: 'Hi Maya. Yeah, I had been working from home lately. Are there any discounts on morning office rides right now?',
-        timestamp: '00:19',
-        sentiment: 'Neutral'
-      },
-      {
-        speaker: 'AI Agent',
-        text: 'Absolutely! We have just credited ₹100 into your XPOOL wallet for your next two rides, and zero surge pricing is unlocked for peak hours.',
-        timestamp: '00:38',
-        sentiment: 'Positive'
-      },
-      {
-        speaker: 'Customer',
-        text: 'Oh that is wonderful! I will book my evening commute with XPOOL today.',
-        timestamp: '00:55',
+        text: 'Hi Maya, yes! When can I start taking airport trips?',
+        timestamp: '00:14',
         sentiment: 'Positive'
       },
       {
         speaker: 'AI Agent',
-        text: 'Delighted to have you with us again, Ananya! Have a productive day ahead.',
-        timestamp: '01:08',
+        text: 'Your document verification is 100% complete. You can log into the partner driver app right now.',
+        timestamp: '00:26',
         sentiment: 'Positive'
       }
     ]
   },
   {
     id: 'CALL-8804',
-    contactName: 'Karthikeyan S',
-    contactPhone: '+91 98410 77319',
-    contactType: 'Driver',
-    agentName: 'XPOOL Driver Onboarder (Tamil)',
+    contactName: 'Priya Dharshini (Demo Passenger)',
+    contactPhone: '+91 98000 00101',
+    contactType: 'Passenger',
+    agentName: 'XPOOL Passenger Engagement (Tamil)',
     language: 'Tamil',
-    status: 'transferred',
-    startTime: '2026-11-08 17:02:11',
-    durationSeconds: 245,
-    outcome: 'Escalated to Human',
-    sentiment: 'Negative',
-    audioDuration: '04:05',
-    escalatedTo: 'Dinesh Kumar (Team Leader)',
-    keyNotes: 'Driver disagreed with vehicle fitness rejection rule for vehicles older than 12 years. Escalated to Tamil Team Leader for manual policy explanation.',
-    actionItem: 'Senior fleet supervisor review concluded: Policy maintained.',
-    transcript: [
-      {
-        speaker: 'AI Agent',
-        text: 'வணக்கம் கார்த்திகேயன் அவர்களே, உங்கள் கார் ஆர்சி மற்றும் எஃப்.சி தணிக்கை முடிவுகள் குறித்து பேசுகிறேன்.',
-        timestamp: '00:06',
-        sentiment: 'Neutral'
-      },
-      {
-        speaker: 'Customer',
-        text: 'சார் என் வண்டி நல்ல கண்டிஷன்ல தான் இருக்கு, ஆனா ஆப்ல ரிஜக்ட்னு வருது, ஏன் சார்?',
-        timestamp: '00:20',
-        sentiment: 'Negative'
-      },
-      {
-        speaker: 'AI Agent',
-        text: 'புரிகிறது கார்த்திகேயன் அவர்களே. எக்ஸ்பூல் பாதுகாப்பு விதிகளின்படி வணிக வாகன வயது வரம்பு மற்றும் தற்போதைய எஃப்.சி சான்றிதழ் அவசியம். இதில் உங்களுக்கு விளக்கம் அளிக்க எங்கள் சீனியர் மேற்பார்வையாளரிடம் இணைக்கிறேன், ஒரு நிமிடம் காத்திருக்கவும்.',
-        timestamp: '00:45',
-        sentiment: 'Neutral'
-      },
-      {
-        speaker: 'Human Specialist',
-        text: 'வணக்கம் கார்த்திகேயன், நான் தினேஷ், எக்ஸ்பூல் டீம் லீடர் பேசுகிறேன். உங்கள் விண்ணப்பத்தை நேரடியாக சரிபார்க்கிறேன்...',
-        timestamp: '01:10',
-        sentiment: 'Neutral'
-      }
-    ]
-  },
-  {
-    id: 'CALL-8805',
-    contactName: 'Nagaraju Goud',
-    contactPhone: '+91 97011 22881',
-    contactType: 'Driver',
-    agentName: 'XPOOL Driver Onboarder (Telugu)',
-    language: 'Telugu',
     status: 'completed',
-    startTime: '2026-11-09 12:28:45',
-    durationSeconds: 155,
+    startTime: '2026-11-07 11:20:00',
+    durationSeconds: 140,
     outcome: 'Interested',
     sentiment: 'Positive',
-    audioDuration: '02:35',
-    keyNotes: 'Auto driver excited about zero commission weekly payout program in Secunderabad zone.',
-    actionItem: 'Sent KYC WhatsApp upload bot link.',
+    audioDuration: '02:20',
+    keyNotes: 'Demo call: Regular OMR commuter gave 5-star rating for EV shuttle punctuality.',
+    actionItem: 'Added to EV preferred commuter route pool.',
     transcript: [
       {
         speaker: 'AI Agent',
-        text: 'నమస్కారం నాగరాజు గారు! ఎక్స్‌పూల్ ఆటో డ్రైవర్ల కోసం సికింద్రాబాద్‌లో ప్రత్యేకమైన వీక్లీ పేఅవుట్ ప్రోగ్రామ్ ప్రారంభించాము. దీని గురించి తెలుసుకోవడానికి మీకు ఆసక్తి ఉందా?',
-        timestamp: '00:05',
+        text: 'வணக்கம் பிரியா அவர்களே! எக்ஸ்பூல் பயணிகள் பிரிவிலிருந்து மாயா பேசுகிறேன். எங்களது மின்சார வாகன சேவை உங்களுக்கு திருப்திகரமாக உள்ளதா?',
+        timestamp: '00:04',
         sentiment: 'Positive'
       },
       {
         speaker: 'Customer',
-        text: 'అవునండి, రోజు ఎంత సంపాదించవచ్చు? కమిషన్ ఎంత తీసుకుంటారు?',
-        timestamp: '00:19',
-        sentiment: 'Neutral'
-      },
-      {
-        speaker: 'AI Agent',
-        text: 'మొదటి నెల ఎటువంటి కమిషన్ ఉండదు! ప్రయాణికులు ఇచ్చే పూర్తి ఫేర్ నేరుగా మీ బ్యాంక్ ఖాతాకు ప్రతి మంగళవారం జమ అవుతుంది.',
-        timestamp: '00:35',
-        sentiment: 'Positive'
-      },
-      {
-        speaker: 'Customer',
-        text: 'సరే అండి, నేను ఆధార్ కార్డు మరియు లైసెన్స్ ఫోటో వాట్సాప్‌లో పంపిస్తాను.',
-        timestamp: '00:54',
+        text: 'ரொம்ப நல்லா இருக்கு மேடம். குறிப்பா சோழிங்கநல்லூர் டூ டைடல் பார்க் ரூட்ல டைமிங் கரெக்ட்டா இருக்கு.',
+        timestamp: '00:18',
         sentiment: 'Positive'
       }
     ]
@@ -234,60 +155,59 @@ export const INITIAL_CALLS: CallRecord[] = [
 
 export const LIVE_CALL_SAMPLES = [
   {
-    id: 'LIVE-101',
-    contactName: 'Vasanth Ramanathan',
-    contactPhone: '+91 94440 33812',
+    id: 'SIM-CH-101',
+    contactName: 'Senthil Kumar V (Demo Driver)',
+    contactPhone: '+91 98000 00001',
     contactType: 'Driver' as const,
-    agentName: 'XPOOL Onboarder AI (Tamil)',
+    agentName: 'XPOOL Onboarder (Tamil)',
     language: 'Tamil' as const,
     status: 'in-progress' as const,
     durationSeconds: 84,
     sentiment: 'Positive' as const,
-    currentStep: 'Explaining 0% commission pilot benefits for Chennai South',
+    currentStep: 'Simulated dialogue: Explaining weekly payout structure for Chennai zone',
     driverVehicle: 'Auto (Bajaj Compact)',
     signalStrength: 94
   },
   {
-    id: 'LIVE-102',
-    contactName: 'Suresh Babu K',
-    contactPhone: '+91 98861 90214',
+    id: 'SIM-CH-102',
+    contactName: 'Ravi Teja Naidu (Demo Driver)',
+    contactPhone: '+91 98000 00002',
     contactType: 'Driver' as const,
     agentName: 'XPOOL Document Bot (Telugu)',
     language: 'Telugu' as const,
     status: 'in-progress' as const,
     durationSeconds: 142,
     sentiment: 'Neutral' as const,
-    currentStep: 'Verifying Driving License expiry date and badge eligibility',
+    currentStep: 'Simulated dialogue: Verifying Driving License validity and badge status',
     driverVehicle: 'Sedan (Maruti Dzire)',
     signalStrength: 88
   },
   {
-    id: 'LIVE-103',
-    contactName: 'Divya Krishnan',
-    contactPhone: '+91 99401 55091',
+    id: 'SIM-CH-103',
+    contactName: 'Priya Dharshini (Demo Passenger)',
+    contactPhone: '+91 98000 00101',
     contactType: 'Passenger' as const,
-    agentName: 'XPOOL Passenger Care Bot',
-    language: 'English' as const,
+    agentName: 'XPOOL Passenger Engagement',
+    language: 'Tamil' as const,
     status: 'ringing' as const,
     durationSeconds: 12,
     sentiment: 'Neutral' as const,
-    currentStep: 'Ringing outbound line...',
-    driverVehicle: 'Passenger Survey',
+    currentStep: 'Simulated telephony line: Outbound ringing...',
+    driverVehicle: 'Passenger Feedback',
     signalStrength: 99
   },
   {
-    id: 'LIVE-104',
-    contactName: 'Ramesh Chenna',
-    contactPhone: '+91 97000 44921',
+    id: 'SIM-CH-104',
+    contactName: 'Kiran Kumar Reddy (Demo Driver)',
+    contactPhone: '+91 98000 00004',
     contactType: 'Driver' as const,
-    agentName: 'XPOOL Onboarder AI (Telugu)',
-    language: 'Telugu' as const,
+    agentName: 'XPOOL Onboarder (English)',
+    language: 'English' as const,
     status: 'in-progress' as const,
     durationSeconds: 215,
     sentiment: 'Positive' as const,
-    currentStep: 'Explaining insurance renewal discount tie-ups with partner firms',
-    driverVehicle: 'EV Auto (Mahindra Treo)',
+    currentStep: 'Simulated dialogue: Explaining airport fleet safety guidelines',
+    driverVehicle: 'SUV (Maruti Ertiga)',
     signalStrength: 91
   }
 ];
-

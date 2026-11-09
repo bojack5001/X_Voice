@@ -83,12 +83,12 @@ export const CallHistory: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-poppins">
-              AI Call History & Audit Transcripts
+              Call History
             </h1>
-            <DemoBadge label="MULTI-LINGUAL TRANSCRIPTS" />
+            <DemoBadge label="SIMULATED CALL AUDIT LOGS" />
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Audit multi-turn speech recordings, extracted key entities, sentiment analysis, and operator transfers
+            Audit multi-turn speech recordings, extracted key entities, sentiment analysis, and human escalation handoffs (Simulated Demo Calls)
           </p>
         </div>
       </div>
@@ -144,7 +144,6 @@ export const CallHistory: React.FC = () => {
               <option value="Tamil">Tamil (தமிழ்)</option>
               <option value="Telugu">Telugu (తెలుగు)</option>
               <option value="English">English</option>
-              <option value="Hindi">Hindi (हिंदी)</option>
             </select>
           </div>
 

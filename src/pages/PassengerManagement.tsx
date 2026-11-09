@@ -100,12 +100,12 @@ export const PassengerManagement: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-poppins">
-              Passenger Directory & Retention
+              Passenger Engagement
             </h1>
-            <DemoBadge label="VOICE SURVEY AUTOMATION" />
+            <DemoBadge label="SIMULATED COMMUTER POOL" />
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Monitor commuter engagement levels, ride frequency, wallet balance, and run AI churn-reduction voice campaigns
+            Monitor commuter engagement levels, ride frequency, wallet balance, and conduct verified manual feedback calls
           </p>
         </div>
       </div>
@@ -178,7 +178,6 @@ export const PassengerManagement: React.FC = () => {
               <option value="Tamil">Tamil (தமிழ்)</option>
               <option value="Telugu">Telugu (తెలుగు)</option>
               <option value="English">English</option>
-              <option value="Hindi">Hindi (हिंदी)</option>
             </select>
           </div>
         </div>
@@ -209,6 +208,7 @@ export const PassengerManagement: React.FC = () => {
               <tr className="border-b border-slate-200 bg-slate-50 text-slate-500 font-semibold">
                 <th className="py-3 px-4">Passenger Details</th>
                 <th className="py-3 px-4">Language & Pickup Hub</th>
+                <th className="py-3 px-4">Consent & Eligibility</th>
                 <th className="py-3 px-4">Engagement State</th>
                 <th className="py-3 px-4">Ride Stats & Rating</th>
                 <th className="py-3 px-4">Wallet Balance</th>
@@ -219,84 +219,114 @@ export const PassengerManagement: React.FC = () => {
             <tbody className="divide-y divide-slate-100">
               {paginatedPassengers.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="text-center py-10 text-slate-400">
+                  <td colSpan={8} className="text-center py-10 text-slate-400">
                     No passengers match selected criteria.
                   </td>
                 </tr>
               ) : (
-                paginatedPassengers.map((p) => (
-                  <tr 
-                    key={p.id}
-                    onClick={() => setSelectedPassenger(p)}
-                    className="hover:bg-amber-50/40 transition cursor-pointer group"
-                  >
-                    {/* Passenger Details */}
-                    <td className="py-3 px-4">
-                      <div className="font-bold text-slate-900 group-hover:text-amber-700 transition">
-                        {p.name}
-                      </div>
-                      <div className="text-[11px] text-slate-500 font-mono">{p.phone}</div>
-                      <div className="text-[10px] text-slate-400">{p.id}</div>
-                    </td>
+                paginatedPassengers.map((p) => {
+                  const isEligible = p.consentStatus === 'Consent Granted' && p.dncStatus !== 'DNC Active';
 
-                    {/* Language & Pickup Hub */}
-                    <td className="py-3 px-4">
-                      <div className="font-semibold text-slate-800">{p.preferredLanguage}</div>
-                      <div className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
-                        <MapPin className="w-3 h-3 text-slate-400" />
-                        <span className="truncate max-w-[140px]">{p.preferredPickupZone}</span>
-                      </div>
-                    </td>
+                  return (
+                    <tr 
+                      key={p.id}
+                      onClick={() => setSelectedPassenger(p)}
+                      className="hover:bg-amber-50/40 transition cursor-pointer group"
+                    >
+                      {/* Passenger Details */}
+                      <td className="py-3 px-4">
+                        <div className="font-bold text-slate-900 group-hover:text-amber-700 transition">
+                          {p.name}
+                        </div>
+                        <div className="text-[11px] text-slate-500 font-mono">{p.phone}</div>
+                        <div className="text-[10px] text-slate-400">{p.id}</div>
+                      </td>
 
-                    {/* Engagement */}
-                    <td className="py-3 px-4">
-                      {getEngagementBadge(p.engagementStatus)}
-                    </td>
+                      {/* Language & Pickup Hub */}
+                      <td className="py-3 px-4">
+                        <div className="font-semibold text-slate-800">{p.preferredLanguage}</div>
+                        <div className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                          <MapPin className="w-3 h-3 text-slate-400" />
+                          <span className="truncate max-w-[140px]">{p.preferredPickupZone}</span>
+                        </div>
+                      </td>
 
-                    {/* Rides & Rating */}
-                    <td className="py-3 px-4">
-                      <div className="font-bold text-slate-800">{p.completedRides} rides completed</div>
-                      <div className="text-[11px] text-amber-600 flex items-center gap-1 font-semibold">
-                        <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
-                        <span>{p.rating.toFixed(2)}</span>
-                      </div>
-                    </td>
+                      {/* Consent & Eligibility */}
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-1">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                            p.consentStatus === 'Consent Granted' ? 'bg-emerald-100 text-emerald-800' :
+                            p.consentStatus === 'Consent Revoked' ? 'bg-rose-100 text-rose-800' :
+                            'bg-amber-100 text-amber-800'
+                          }`}>
+                            {p.consentStatus || 'Consent Unknown'}
+                          </span>
+                          {p.dncStatus === 'DNC Active' && (
+                            <span className="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 text-[10px] font-bold">
+                              DNC
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-[10px] text-slate-500 mt-0.5 max-w-[140px] truncate" title={p.nextEligibleContactDate}>
+                          {p.nextEligibleContactDate || 'Eligible Now'}
+                        </div>
+                      </td>
 
-                    {/* Wallet */}
-                    <td className="py-3 px-4">
-                      <div className="font-mono font-bold text-slate-900">₹{p.walletBalance.toFixed(2)}</div>
-                      <span className="text-[10px] text-slate-400">Prepaid Credits</span>
-                    </td>
+                      {/* Engagement */}
+                      <td className="py-3 px-4">
+                        {getEngagementBadge(p.engagementStatus)}
+                      </td>
 
-                    {/* Last Ride */}
-                    <td className="py-3 px-4">
-                      <div className="text-[11px] font-medium text-slate-700">{p.lastRideDate}</div>
-                      <span className="text-[10px] text-slate-400">Member since {p.joinedDate}</span>
-                    </td>
+                      {/* Rides & Rating */}
+                      <td className="py-3 px-4">
+                        <div className="font-bold text-slate-800">{p.completedRides} rides completed</div>
+                        <div className="text-[11px] text-amber-600 flex items-center gap-1 font-semibold">
+                          <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
+                          <span>{p.rating.toFixed(2)}</span>
+                        </div>
+                      </td>
 
-                    {/* Actions */}
-                    <td className="py-3 px-4 text-right" onClick={(e) => e.stopPropagation()}>
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => setSelectedPassenger(p)}
-                          className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition"
-                          title="View Profile & Ride History"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
+                      {/* Wallet */}
+                      <td className="py-3 px-4">
+                        <div className="font-mono font-bold text-slate-900">₹{p.walletBalance.toFixed(2)}</div>
+                        <span className="text-[10px] text-slate-400">Prepaid Credits</span>
+                      </td>
 
-                        <button
-                          onClick={(e) => handleTriggerSurvey(p, e)}
-                          className="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs flex items-center gap-1 shadow-sm transition active:scale-95"
-                          title="Trigger AI Survey / Engagement Call"
-                        >
-                          <PhoneCall className="w-3 h-3" />
-                          <span>AI Call</span>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                      {/* Last Ride */}
+                      <td className="py-3 px-4">
+                        <div className="text-[11px] font-medium text-slate-700">{p.lastRideDate}</div>
+                        <span className="text-[10px] text-slate-400">Last called: {p.lastContactedAt || 'Never'}</span>
+                      </td>
+
+                      {/* Actions */}
+                      <td className="py-3 px-4 text-right" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => setSelectedPassenger(p)}
+                            className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition"
+                            title="View Profile & Ride History"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </button>
+
+                          <button
+                            onClick={(e) => handleTriggerSurvey(p, e)}
+                            disabled={!isEligible}
+                            className="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 disabled:opacity-35 disabled:cursor-not-allowed text-slate-950 font-bold rounded-lg text-xs flex items-center gap-1 shadow-sm transition active:scale-95"
+                            title={
+                              !isEligible 
+                                ? `Outbound calling blocked: ${p.consentStatus}${p.dncStatus === 'DNC Active' ? ' (DNC Active)' : ''}` 
+                                : 'Trigger manual feedback call sequence'
+                            }
+                          >
+                            <PhoneCall className="w-3 h-3" />
+                            <span>Manual Call</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>
@@ -341,15 +371,23 @@ export const PassengerManagement: React.FC = () => {
                 Close
               </button>
               <button
+                disabled={selectedPassenger.consentStatus !== 'Consent Granted' || selectedPassenger.dncStatus === 'DNC Active'}
                 onClick={() => {
                   const p = selectedPassenger;
                   setSelectedPassenger(null);
                   handleTriggerSurvey(p);
                 }}
-                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 text-xs font-bold rounded-xl shadow-brand flex items-center gap-1.5"
+                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-950 text-xs font-bold rounded-xl shadow-brand flex items-center gap-1.5"
+                title={
+                  selectedPassenger.consentStatus !== 'Consent Granted'
+                    ? `Calling disabled: ${selectedPassenger.consentStatus}`
+                    : selectedPassenger.dncStatus === 'DNC Active'
+                    ? 'Calling disabled: DNC Active'
+                    : 'Dispatch verified manual feedback call'
+                }
               >
                 <PhoneCall className="w-4 h-4" />
-                <span>Launch Retention Survey Call</span>
+                <span>Launch Manual Feedback Call</span>
               </button>
             </>
           }
@@ -362,16 +400,25 @@ export const PassengerManagement: React.FC = () => {
                 <span className="mt-1 inline-block">{getEngagementBadge(selectedPassenger.engagementStatus)}</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-semibold block">Wallet Balance</span>
-                <span className="text-base font-bold text-slate-900 font-mono mt-0.5 block">₹{selectedPassenger.walletBalance.toFixed(2)}</span>
+                <span className="text-[10px] text-slate-400 uppercase font-semibold block">Consent Status</span>
+                <span className={`text-xs font-bold mt-1 block ${
+                  selectedPassenger.consentStatus === 'Consent Granted' ? 'text-emerald-700' :
+                  selectedPassenger.consentStatus === 'Consent Revoked' ? 'text-rose-700' : 'text-amber-700'
+                }`}>
+                  {selectedPassenger.consentStatus || 'Consent Unknown'}
+                </span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-semibold block">Total Rides</span>
-                <span className="text-base font-bold text-slate-900 mt-0.5 block">{selectedPassenger.completedRides} Rides</span>
+                <span className="text-[10px] text-slate-400 uppercase font-semibold block">DNC Suppression</span>
+                <span className={`text-xs font-bold mt-1 block ${selectedPassenger.dncStatus === 'DNC Active' ? 'text-rose-700' : 'text-emerald-700'}`}>
+                  {selectedPassenger.dncStatus || 'Not Listed'}
+                </span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-semibold block">Preferred Language</span>
-                <span className="text-sm font-bold text-amber-700 mt-0.5 block">{selectedPassenger.preferredLanguage}</span>
+                <span className="text-[10px] text-slate-400 uppercase font-semibold block">Eligibility</span>
+                <span className="text-xs font-semibold text-slate-700 mt-1 block truncate" title={selectedPassenger.nextEligibleContactDate}>
+                  {selectedPassenger.nextEligibleContactDate || 'Eligible Now'}
+                </span>
               </div>
             </div>
 
