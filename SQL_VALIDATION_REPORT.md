@@ -3,22 +3,24 @@
 **Validation Date:** November 9, 2026  
 **Dialect:** PostgreSQL 15+ / Supabase  
 **Analyzed Files:**
-1. `SUPABASE_SCHEMA.sql` (Schema DDL, Constraints, Indexes & Triggers)
+1. `SUPABASE_SCHEMA.sql` (Schema DDL, Triggers, Dispatch Functions & Constraints)
 2. `RLS_POLICIES.sql` (Row Level Security & Column Grants)
+3. `STORAGE_POLICIES.sql` (Supabase Storage Bucket & Object Policies)
 
 ---
 
 ## 1. Syntax & Error `42601` Defense Audit
 
-| Validation Check | `SUPABASE_SCHEMA.sql` | `RLS_POLICIES.sql` | Status |
-| :--- | :---: | :---: | :---: |
-| **Markdown Fences (` ``` `)** | 0 Found | 0 Found | PASS |
-| **Box-Drawing Unicode Characters (`┌─│└`)** | 0 Found | 0 Found | PASS |
-| **Invalid Statement Terminators (`;`)** | All Valid | All Valid | PASS |
-| **Reserved Keyword Collisions** | 0 Found | 0 Found | PASS |
-| **Enum / CHECK Constraint Syntax** | Valid ANSI SQL | Valid ANSI SQL | PASS |
-| **Trigger Function Signature (`RETURNS TRIGGER`)** | Valid PL/pgSQL | N/A | PASS |
-| **SECURITY DEFINER search_path Hardening** | Valid | `search_path = public` | PASS |
+| Validation Check | `SUPABASE_SCHEMA.sql` | `RLS_POLICIES.sql` | `STORAGE_POLICIES.sql` | Status |
+| :--- | :---: | :---: | :---: | :---: |
+| **Markdown Fences (` ``` `)** | 0 Found | 0 Found | 0 Found | PASS |
+| **Box-Drawing Unicode Characters (`┌─│└`)** | 0 Found | 0 Found | 0 Found | PASS |
+| **Invalid Statement Terminators (`;`)** | All Valid | All Valid | All Valid | PASS |
+| **Reserved Keyword Collisions** | 0 Found | 0 Found | 0 Found | PASS |
+| **Enum / CHECK Constraint Syntax** | Valid ANSI SQL | Valid ANSI SQL | Valid ANSI SQL | PASS |
+| **Trigger Function Signatures (`RETURNS TRIGGER`)** | Valid PL/pgSQL | N/A | N/A | PASS |
+| **Dispatch Function Signature (`RETURNS xai_call_jobs`)** | Valid PL/pgSQL | N/A | N/A | PASS |
+| **SECURITY DEFINER search_path Hardening** | `search_path = public` | `search_path = public` | N/A | PASS |
 
 ---
 
@@ -34,7 +36,7 @@ To prevent foreign-key reference errors (`relation does not exist`), table defin
    +---> [Level 2] xai_employees (Links to auth.users, self-ref team_leader_id)
    |        |
    |        +---> [Level 3] xai_suppression_list (FK -> xai_employees)
-   |        +---> [Level 3] xai_contact_consents
+   |        +---> [Level 3] xai_contact_consents (FK -> xai_employees)
    |        +---> [Level 3] xai_drivers (FK -> xai_employees)
    |        |        |
    |        |        +---> [Level 4] xai_kyc_documents (FK -> xai_drivers, xai_employees)
@@ -57,8 +59,8 @@ To prevent foreign-key reference errors (`relation does not exist`), table defin
 ## 3. Data Type & Default Value Conformance Check
 
 ### 3.1 `TIMESTAMPTZ` and `now()` Standardization
-- All timestamps (`created_at`, `updated_at`, `captured_at`, `revoked_at`, `start_time`, `end_time`) are typed as `TIMESTAMPTZ`.
-- Standardized to `now()` (PostgreSQL standard equivalent to `CURRENT_TIMESTAMP`).
+- All timestamps (`created_at`, `updated_at`, `captured_at`, `revoked_at`, `start_time`, `end_time`, `approved_at`, `dispatched_at`) are typed as `TIMESTAMPTZ`.
+- Standardized to `now()` across all tables and trigger functions.
 - All `updated_at` columns are managed by trigger function `xai_set_updated_at()`.
 
 ### 3.2 `next_eligible_contact_date` Verification
@@ -66,45 +68,26 @@ To prevent foreign-key reference errors (`relation does not exist`), table defin
 - `NULL` explicitly denotes that no future restriction is established.
 
 ### 3.3 Deceptive Call Defaults Elimination
-- `xai_call_records.status`: Defaults to `'queued'` (was `'completed'`).
-- `xai_call_records.outcome`: Defaults to `NULL` (no longer auto-populates `'Interested'`).
-- `xai_call_records.sentiment`: Defaults to `NULL` (no longer auto-populates `'Neutral'`).
-- `xai_call_records.audio_duration`: Defaults to `NULL` (no longer hardcoded to `'00:00'`).
+- `xai_call_records.status`: Defaults to `'queued'`.
+- `xai_call_records.outcome`: Defaults to `NULL`.
+- `xai_call_records.sentiment`: Defaults to `NULL`.
+- `xai_call_records.audio_duration`: Defaults to `NULL`.
 
 ---
 
-## 4. RLS Policy & Role Access Matrix
+## 4. Trigger & Concurrency Validation
 
-### 4.1 Recursive Query Prevention
-Policies do not execute recursive table joins to check roles. Role resolution is encapsulated in `xai_get_user_role()`, declared as:
-- `SECURITY DEFINER`
-- `STABLE` (cached for the query duration)
-- `SET search_path = public` (prevents malicious schema override)
-
-### 4.2 Role Permission Coverage
-
-| Entity | CEO | HR | Team Leader | Customer Care Exec |
-| :--- | :---: | :---: | :---: | :---: |
-| `xai_company_profile` | Read / Write | Read Only | Read Only | Read Only |
-| `xai_employees` | Full CRUD | Full CRUD | Directory Read | Self-Update Only |
-| `xai_suppression_list` | Full CRUD | Read / Insert | Read / Insert / Update | Read / Insert (Opt-Out) |
-| `xai_contact_consents` | Full CRUD | Read Only | Read / Insert / Update | Read / Insert / Revoke |
-| `xai_drivers` | Full CRUD | Read Only | Team Scope CRUD | Assigned Scope Read/Update |
-| `xai_kyc_documents` | Full CRUD | Audit Read / Verify | Team Scope / Verify | Masked Scope Read Only |
-| `xai_passengers` | Full CRUD | Read Only | Team Scope CRUD | Assigned Scope Read/Update |
-| `xai_ai_agents` | Full CRUD | Read Only | Full CRUD | Read Only |
-| `xai_call_jobs` | Full CRUD | Read Only | Team Initiate / Approve | Self Initiate (Gated) |
-| `xai_call_records` | Full CRUD | Read Only | Team Read / Insert / Update | Assigned Read / Note Update |
-| `xai_follow_up_tasks`| Full CRUD | Read Only | Team Scope CRUD | Assigned Scope Update |
-| `xai_lead_imports` | Full CRUD | Audit Read | Full CRUD | No Access |
+1. **Self-Escalation Guard (`trg_xai_employees_escalation_guard`):** Validated to intercept unauthorized modifications to employee roles, permissions, status, and reporting lines.
+2. **Reassignment Guard (`trg_xai_drivers_reassign_guard`, `trg_xai_passengers_reassign_guard`):** Validated to restrict ownership transfers to `CEO` and `Team Leader`.
+3. **Consent Immutability Guard (`trg_xai_consents_protect`):** Validated to abort `DELETE` statements and protect captured evidence fields.
+4. **Call Job Gating Guard (`trg_xai_call_jobs_compliance`):** Validated to verify contact matching, CCE assignment scope, DNC status, and purpose-specific consent.
+5. **Partial Unique Index (`uq_xai_call_jobs_active_phone`):** Validated to reject simultaneous concurrent call jobs to the same phone number.
+6. **Pre-Dial Dispatch Function (`xai_dispatch_call_job`):** Validated with `FOR UPDATE` row-level locking.
 
 ---
 
-## 5. Execution Pre-Flight Checklist
+## 5. Storage Policy Validation (`STORAGE_POLICIES.sql`)
 
-Before running these scripts in the Supabase SQL Editor:
-1. Ensure the target Supabase project is active.
-2. Confirm the user executing the script has admin privileges in Supabase.
-3. Run `SUPABASE_SCHEMA.sql` first.
-4. Run `RLS_POLICIES.sql` second.
-5. Both files are safe to re-run (idempotent DDL and `DROP POLICY IF EXISTS`).
+- Evaluates `(string_to_array(name, '/'))[2]` to resolve target `driver_id`.
+- Validates that ordinary staff (CCE) can only upload and read files belonging to their assigned drivers.
+- Verified syntax against Supabase storage schema (`storage.buckets` and `storage.objects`).
