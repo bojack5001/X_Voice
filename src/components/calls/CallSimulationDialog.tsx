@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  PhoneCall, 
-  PhoneOff, 
-  Bot, 
-  Globe, 
-  Sparkles, 
-  CheckCircle2, 
+import {
+  PhoneCall,
+  PhoneOff,
+  Bot,
+  Globe,
+  Sparkles,
+  CheckCircle2,
   AlertTriangle,
   XCircle,
   ShieldCheck,
@@ -243,22 +243,20 @@ export const CallSimulationDialog: React.FC<CallSimulationDialogProps> = ({
                       <button
                         type="button"
                         onClick={() => setContactCategory('Driver')}
-                        className={`flex-1 py-1.5 px-3 rounded-lg font-semibold border transition ${
-                          contactCategory === 'Driver' 
-                            ? 'bg-amber-500 text-slate-950 border-amber-500 shadow-sm' 
+                        className={`flex-1 py-1.5 px-3 rounded-lg font-semibold border transition ${contactCategory === 'Driver'
+                            ? 'bg-amber-500 text-slate-950 border-amber-500 shadow-sm'
                             : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
-                        }`}
+                          }`}
                       >
                         Driver Partner
                       </button>
                       <button
                         type="button"
                         onClick={() => setContactCategory('Passenger')}
-                        className={`flex-1 py-1.5 px-3 rounded-lg font-semibold border transition ${
-                          contactCategory === 'Passenger' 
-                            ? 'bg-amber-500 text-slate-950 border-amber-500 shadow-sm' 
+                        className={`flex-1 py-1.5 px-3 rounded-lg font-semibold border transition ${contactCategory === 'Passenger'
+                            ? 'bg-amber-500 text-slate-950 border-amber-500 shadow-sm'
                             : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
-                        }`}
+                          }`}
                       >
                         Passenger
                       </button>
@@ -324,13 +322,12 @@ export const CallSimulationDialog: React.FC<CallSimulationDialogProps> = ({
             {/* Steps 3, 4, 5: Consent, DNC & Frequency Eligibility Strip */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {/* Step 3: Consent Status */}
-              <div className={`p-3 rounded-xl border ${
-                consentStatus === 'Consent Granted' 
-                  ? 'bg-emerald-50/70 border-emerald-200' 
+              <div className={`p-3 rounded-xl border ${consentStatus === 'Consent Granted'
+                  ? 'bg-emerald-50/70 border-emerald-200'
                   : consentStatus === 'Consent Revoked'
-                  ? 'bg-rose-50 border-rose-200'
-                  : 'bg-amber-50 border-amber-200'
-              }`}>
+                    ? 'bg-rose-50 border-rose-200'
+                    : 'bg-amber-50 border-amber-200'
+                }`}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[10px] font-bold uppercase text-slate-500">Step 3: Consent Check</span>
                   {isConsentGranted ? (
@@ -341,16 +338,15 @@ export const CallSimulationDialog: React.FC<CallSimulationDialogProps> = ({
                 </div>
                 <div className="font-bold text-slate-900 text-xs">{consentStatus}</div>
                 <span className="text-[10px] text-slate-600 mt-0.5 block">
-                  {isConsentGranted 
-                    ? 'Verified opt-in on file' 
+                  {isConsentGranted
+                    ? 'Verified opt-in on file'
                     : 'Outbound calling strictly disabled'}
                 </span>
               </div>
 
               {/* Step 4: DNC Status */}
-              <div className={`p-3 rounded-xl border ${
-                isDncClear ? 'bg-emerald-50/70 border-emerald-200' : 'bg-rose-50 border-rose-200'
-              }`}>
+              <div className={`p-3 rounded-xl border ${isDncClear ? 'bg-emerald-50/70 border-emerald-200' : 'bg-rose-50 border-rose-200'
+                }`}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[10px] font-bold uppercase text-slate-500">Step 4: DNC Suppression</span>
                   {isDncClear ? (
@@ -527,9 +523,8 @@ export const CallSimulationDialog: React.FC<CallSimulationDialogProps> = ({
               {/* Header inside call */}
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${
-                    workflowState === 'connected' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'
-                  }`}>
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${workflowState === 'connected' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'
+                    }`}>
                     <Bot className="w-5 h-5" />
                   </div>
                   <div>
@@ -542,10 +537,9 @@ export const CallSimulationDialog: React.FC<CallSimulationDialogProps> = ({
 
                 <div className="text-right">
                   <div className="flex items-center gap-1.5 justify-end">
-                    <span className={`w-2 h-2 rounded-full ${
-                      workflowState === 'connected' ? 'bg-emerald-400 animate-pulse' : 
-                      workflowState === 'calling' ? 'bg-amber-400 animate-ping' : 'bg-slate-500'
-                    }`} />
+                    <span className={`w-2 h-2 rounded-full ${workflowState === 'connected' ? 'bg-emerald-400 animate-pulse' :
+                        workflowState === 'calling' ? 'bg-amber-400 animate-ping' : 'bg-slate-500'
+                      }`} />
                     <span className="font-mono text-xs font-bold text-amber-400">
                       {Math.floor(callDuration / 60).toString().padStart(2, '0')}:{(callDuration % 60).toString().padStart(2, '0')}
                     </span>
@@ -563,9 +557,8 @@ export const CallSimulationDialog: React.FC<CallSimulationDialogProps> = ({
                 {Array.from({ length: 32 }).map((_, i) => (
                   <div
                     key={i}
-                    className={`w-1 rounded-full transition-all duration-300 ${
-                      workflowState === 'connected' ? 'bg-amber-400' : 'bg-slate-700'
-                    }`}
+                    className={`w-1 rounded-full transition-all duration-300 ${workflowState === 'connected' ? 'bg-amber-400' : 'bg-slate-700'
+                      }`}
                     style={{
                       height: workflowState === 'connected' ? `${Math.max(15, (i % 6) * 16 + 12)}%` : '15%'
                     }}
